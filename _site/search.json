@@ -39,7 +39,7 @@
     "href": "In-class_Ex/In-class_Ex01/In-class_Ex01.html",
     "title": "In-class Exercise 1: Now You See It!",
     "section": "",
-    "text": "##Loading R packages\nIn this hands-on exercise, two R packages will be used. They are:\ntidyverse, and haven\nThe code chunk used is as follows:\npacman::p_load(tidyverse,haven)"
+    "text": "##Loading R packages\nIn this hands-on exercise, two R packages will be used. They are:\nThe code chunk used is as follows:\npacman::p_load(tidyverse,haven)"
   },
   {
     "objectID": "In-class_Ex/In-class_Ex01/In-class_Ex01.html#importing-pisa-data",
