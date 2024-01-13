@@ -202,7 +202,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">January 13, 2024</p>
+      <p class="date-modified">January 17, 2024</p>
     </div>
   </div>
     
@@ -213,14 +213,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>##Loading R packages</p>
 <p>In this hands-on exercise, two R packages will be used. They are:</p>
-<p><a href="https://www.tidyverse.org/">tidyverse</a>, and <a href="https://www.tidyverse.org/">haven</a></p>
+<ul>
+<li><p><a href="https://www.tidyverse.org/">tidyverse</a>, and</p></li>
+<li><p><a href="https://www.tidyverse.org/">haven</a></p></li>
+</ul>
 <p>The code chunk used is as follows:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse,haven)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="importing-pisa-data" class="level2">
 <h2 class="anchored" data-anchor-id="importing-pisa-data">Importing PISA data</h2>
-<p>The cose chunk below uses <a href="https://haven.tidyverse.org/reference/read_sas.html"><code>read_sas()</code></a> of <a href="https://haven.tidyverse.org/">haven</a> to import PISA data into R environment.</p>
+<p>The code chunk below uses <a href="https://haven.tidyverse.org/reference/read_sas.html"><code>read_sas()</code></a> of <a href="https://haven.tidyverse.org/">haven</a> to import PISA data into R environment.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># eval: false</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>stu_qqq <span class="ot">&lt;-</span> <span class="fu">read_sas</span>(<span class="st">"data/cy08msp_stu_qqq.sas7bdat"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
