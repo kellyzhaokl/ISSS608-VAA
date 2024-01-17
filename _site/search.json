@@ -7,6 +7,55 @@
     "text": "Welcome to ISSS608 Visual Analytics and Applications. In this website, you will find my coursework prepared for this course."
   },
   {
+    "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html",
+    "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html",
+    "title": "Hands-on_Ex02",
+    "section": "",
+    "text": "The name and function of the new packages that will be used for this exercise are as follow:\n\nggrepel: an R package provides a way to prevent labels from overlapping in ggplot2 plots.\nggthemes: an R package provides some extra themes, geoms, and scales for ‘ggplot2’.\nhrbrthemes: an R package provides another set of visually appealing themes and formatting options for ggplot2.\npatchwork: an R package provides a way to combine multiple ggplot2 plots into a single figure.\n\n\n# eval: false\npacman::p_load(tidyverse, patchwork, \n               ggthemes, hrbrthemes,\n               ggrepel)\n\n\n\n\n\n# eval: false\nexam_data &lt;- read_csv(\"data/Exam_data.csv\")"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#install-and-load-the-required-r-libraries",
+    "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#install-and-load-the-required-r-libraries",
+    "title": "Hands-on_Ex02",
+    "section": "",
+    "text": "The name and function of the new packages that will be used for this exercise are as follow:\n\nggrepel: an R package provides a way to prevent labels from overlapping in ggplot2 plots.\nggthemes: an R package provides some extra themes, geoms, and scales for ‘ggplot2’.\nhrbrthemes: an R package provides another set of visually appealing themes and formatting options for ggplot2.\npatchwork: an R package provides a way to combine multiple ggplot2 plots into a single figure.\n\n\n# eval: false\npacman::p_load(tidyverse, patchwork, \n               ggthemes, hrbrthemes,\n               ggrepel)"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#import-the-data",
+    "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#import-the-data",
+    "title": "Hands-on_Ex02",
+    "section": "",
+    "text": "# eval: false\nexam_data &lt;- read_csv(\"data/Exam_data.csv\")"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#working-with-ggrepel-package",
+    "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#working-with-ggrepel-package",
+    "title": "Hands-on_Ex02",
+    "section": "2.1 Working with ggrepel package",
+    "text": "2.1 Working with ggrepel package\nggrepel is an extension of ggplot2 package which provides geoms for ggplot2 to repel overlapping text as in our examples on the right.\n\n# eval: false\nggplot(data = exam_data,\n       aes(x = MATHS,\n           y = ENGLISH)) +\n  geom_point() +\n  geom_smooth(method = lm,\n              linewidth = 0.5) +\n  geom_label_repel(aes(label = ID),\n                   fontface = \"bold\") +\n  coord_cartesian(xlim = c(0,100),\n                  ylim = c(0,100)) +\n  ggtitle(\"English scores versus Maths scores for Primary 3\")"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#working-with-themes",
+    "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#working-with-themes",
+    "title": "Hands-on_Ex02",
+    "section": "2.2 Working with themes",
+    "text": "2.2 Working with themes\n8 Built-in themes: theme_gray(), theme_bw(), theme_classic(), theme_dark(), theme_light(), theme_linedraw(), theme_minimal(), and theme_void(). Refer to here\n\nggplot(data = exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\") +\n  theme_gray() +\n  ggtitle(\"Ditribution of Maths scores\")\n\n\n\n\n\n2.2.1 Working with ggthems package\nIn the example below, The Economist theme is used.\n\nggplot(data = exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\") +\n  theme_economist() +\n  ggtitle(\"Ditribution of Maths scores\")\n\n\n\n\n\n\n2.2.2 Working with hrbthems package\nhrbrthemesThis focuses more on the typographic elements, labels and fonts.\n\nggplot(data=exam_data, \n             aes(x = MATHS)) +\n  geom_histogram(bins=20, \n                 boundary = 100,\n                 color=\"grey25\", \n                 fill=\"grey90\") +\n  ggtitle(\"Distribution of Maths scores\") +\n  theme_ipsum()\n\n\n\n\nThe second goal centers around productivity for a production workflow. In fact, this “production workflow” is the context for where the elements of hrbrthemes should be used.\n\nggplot(data = exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\") +\n  theme_ipsum(axis_title_size = 18,          #increase font size of the axis title to 18\n              base_size = 15,                #increase the default axis label to 15\n              grid = \"Y\") +                  #only keep the y-axis grid line -&gt; remove the x-axis grid lines\n  ggtitle(\"Ditribution of Maths scores\")"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#working-with-patchwork",
+    "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#working-with-patchwork",
+    "title": "Hands-on_Ex02",
+    "section": "2.3 Working with patchwork",
+    "text": "2.3 Working with patchwork\nCreating composite plot by combining multiple graphs. Start with creating three statistical graphics below.\n\n#creating histogram\np1 &lt;- ggplot(data = exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\") +\n  coord_cartesian(xlim = c(0,100)) +\n  ggtitle(\"Ditribution of Maths scores\")\n\np2 &lt;- ggplot(data = exam_data,\n       aes(x = ENGLISH)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\") +\n  coord_cartesian(xlim = c(0,100)) +\n  ggtitle(\"Ditribution of English scores\")\n\n#creating scatterplot\np3 &lt;- ggplot(data = exam_data,\n       aes(x = MATHS,\n           y = ENGLISH)) +\n  geom_point() +\n  geom_smooth(method = lm,\n              linewidth = 0.5) +\n  coord_cartesian(xlim = c(0,100),\n                  ylim = c(0,100)) +\n  ggtitle(\"English scores versus Maths scores for Primary 3\")\n\nCreating patchwork.(Refer here for more details)\n\nUse ‘+’ sign to create two columns layout\nUse ‘/’ sign to create two row layout (stack)\nUse ‘()’ sign to create subplot group\nUse ‘|’ sign to place the plots besisde each other\n\nExample 1\n\np1 + p2 / p3\n\n\n\n\nExample 2\n\n(p1 / p2) | p3\n\n\n\n\nExample 3: It will auto-tag the subplots in text\n\n((p1 / p2) | p3) +\n  plot_annotation(tag_levels = 'I')\n\n\n\n\nExample 4: Combine patchwork and themes\n\n((p1 / p2) | p3) & theme_economist()\n\n\n\n\nExample 5: Insert another plot in a plot using insert_element()\n\np3 + inset_element(p2,\n                   left = 0.02,\n                   bottom = 0.7,\n                   right = 0.5,\n                   top = 1)"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
     "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html",
     "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html",
     "title": "Hands-on Exercise 1",
@@ -26,13 +75,6 @@
     "title": "Hands-on Exercise 1",
     "section": "",
     "text": "exam_data &lt;- read_csv(\"data/Exam_data.csv\")\n\nRows: 322 Columns: 7\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (4): ID, CLASS, GENDER, RACE\ndbl (3): ENGLISH, MATHS, SCIENCE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
   },
   {
     "objectID": "In-class_Ex/In-class_Ex01/In-class_Ex01.html",
