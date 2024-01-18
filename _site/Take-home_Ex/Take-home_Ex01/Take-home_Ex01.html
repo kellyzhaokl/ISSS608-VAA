@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2024-01-18">
 
-<title>ISSS608-VAA</title>
+<title>ISSS608-VAA - Take-home_Ex01</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,25 +21,59 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -61,7 +96,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -71,7 +106,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">ISSS608-VAA</span>
     </a>
   </div>
@@ -87,11 +122,11 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-hands-on-exercise">    
         <li>
-    <a class="dropdown-item" href="./Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html" rel="" target="">
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html" rel="" target="">
  <span class="dropdown-text">Hands-on Exercise 1</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html" rel="" target="">
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html" rel="" target="">
  <span class="dropdown-text">Hands-on Exercise 2</span></a>
   </li>  
     </ul>
@@ -102,7 +137,7 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-in-class-exercise">    
         <li>
-    <a class="dropdown-item" href="./In-class_Ex/In-class_Ex01/In-class_Ex01.html" rel="" target="">
+    <a class="dropdown-item" href="../../In-class_Ex/In-class_Ex01/In-class_Ex01.html" rel="" target="">
  <span class="dropdown-text">In-class Exercise 1</span></a>
   </li>  
     </ul>
@@ -113,7 +148,7 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-take-home-exercise">    
         <li>
-    <a class="dropdown-item" href="./Take-home_Ex/Take-home_Ex01/Take-home_Ex01.html" rel="" target="">
+    <a class="dropdown-item" href="../../Take-home_Ex/Take-home_Ex01/Take-home_Ex01.html" rel="" target="">
  <span class="dropdown-text">Take-home Exercise 1</span></a>
   </li>  
     </ul>
@@ -121,11 +156,11 @@ ul.task-list li input[type="checkbox"] {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="../../index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
+    <a class="nav-link" href="../../about.html" rel="" target="">
  <span class="menu-text">About</span></a>
   </li>  
 </ul>
@@ -140,20 +175,14 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#welcome-to-isss608-visual-analytics-and-applications.-in-this-website-you-will-find-my-coursework-prepared-for-this-course." id="toc-welcome-to-isss608-visual-analytics-and-applications.-in-this-website-you-will-find-my-coursework-prepared-for-this-course." class="nav-link active" data-scroll-target="#welcome-to-isss608-visual-analytics-and-applications.-in-this-website-you-will-find-my-coursework-prepared-for-this-course."><strong>Welcome to ISSS608 Visual Analytics and Applications. In this website, you will find my coursework prepared for this course.</strong></a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">ISSS608-VAA</h1>
+<h1 class="title">Take-home_Ex01</h1>
 </div>
 
 
@@ -161,18 +190,81 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 18, 2024</p>
+    </div>
+  </div>
   
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">January 18, 2024</p>
+    </div>
+  </div>
     
   </div>
   
 
 </header>
 
-<section id="welcome-to-isss608-visual-analytics-and-applications.-in-this-website-you-will-find-my-coursework-prepared-for-this-course." class="level2">
-<h2 class="anchored" data-anchor-id="welcome-to-isss608-visual-analytics-and-applications.-in-this-website-you-will-find-my-coursework-prepared-for-this-course."><strong>Welcome to ISSS608 Visual Analytics and Applications. In this website, you will find my coursework prepared for this course.</strong></h2>
+<p>1.OVERVIEW</p>
+<p>Despite official claims of educational equity in Singapore, public perception highlights persistent disparities based on socioeconomic status, school type, and family background.</p>
+<p>2.OBJECTIVE</p>
+<p>Using appropriate&nbsp;<strong>Exploratory Data Analysis (EDA)</strong>&nbsp;methods and&nbsp;<strong>ggplot2</strong>&nbsp;functions to get insight.</p>
+<ul>
+<li><p>The distribution of Singapore students’ performance in mathematics, reading, and science.</p></li>
+<li><p>The relationship between these performances with schools, gender and socioeconomic status of the students.</p></li>
+</ul>
+<p>3.DATA PREPARATION</p>
+<p>3.1 Loading R packages</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse,haven)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>3.2 Data set</p>
+<p>As we are foucesd on Singapore database. So firstly we should filter Singapore dataset. Refer to <a href="https://isss608-ay2023-24t2.netlify.app/in-class_ex/in-class_ex01/in-class_ex01">In-class Exercise 1</a> for more details</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># eval: false</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>stu_qqq_SG <span class="ot">&lt;-</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_rds</span>(<span class="st">"data/stu_qqq_SG.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>3.3 Data Preparation</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">"PV"</span>, <span class="fu">colnames</span>(stu_qqq_SG), <span class="at">value =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "PV1MATH"  "PV2MATH"  "PV3MATH"  "PV4MATH"  "PV5MATH"  "PV6MATH" 
+  [7] "PV7MATH"  "PV8MATH"  "PV9MATH"  "PV10MATH" "PV1READ"  "PV2READ" 
+ [13] "PV3READ"  "PV4READ"  "PV5READ"  "PV6READ"  "PV7READ"  "PV8READ" 
+ [19] "PV9READ"  "PV10READ" "PV1SCIE"  "PV2SCIE"  "PV3SCIE"  "PV4SCIE" 
+ [25] "PV5SCIE"  "PV6SCIE"  "PV7SCIE"  "PV8SCIE"  "PV9SCIE"  "PV10SCIE"
+ [31] "PV1MCCR"  "PV2MCCR"  "PV3MCCR"  "PV4MCCR"  "PV5MCCR"  "PV6MCCR" 
+ [37] "PV7MCCR"  "PV8MCCR"  "PV9MCCR"  "PV10MCCR" "PV1MCQN"  "PV2MCQN" 
+ [43] "PV3MCQN"  "PV4MCQN"  "PV5MCQN"  "PV6MCQN"  "PV7MCQN"  "PV8MCQN" 
+ [49] "PV9MCQN"  "PV10MCQN" "PV1MCSS"  "PV2MCSS"  "PV3MCSS"  "PV4MCSS" 
+ [55] "PV5MCSS"  "PV6MCSS"  "PV7MCSS"  "PV8MCSS"  "PV9MCSS"  "PV10MCSS"
+ [61] "PV1MCUD"  "PV2MCUD"  "PV3MCUD"  "PV4MCUD"  "PV5MCUD"  "PV6MCUD" 
+ [67] "PV7MCUD"  "PV8MCUD"  "PV9MCUD"  "PV10MCUD" "PV1MPEM"  "PV2MPEM" 
+ [73] "PV3MPEM"  "PV4MPEM"  "PV5MPEM"  "PV6MPEM"  "PV7MPEM"  "PV8MPEM" 
+ [79] "PV9MPEM"  "PV10MPEM" "PV1MPFS"  "PV2MPFS"  "PV3MPFS"  "PV4MPFS" 
+ [85] "PV5MPFS"  "PV6MPFS"  "PV7MPFS"  "PV8MPFS"  "PV9MPFS"  "PV10MPFS"
+ [91] "PV1MPIN"  "PV2MPIN"  "PV3MPIN"  "PV4MPIN"  "PV5MPIN"  "PV6MPIN" 
+ [97] "PV7MPIN"  "PV8MPIN"  "PV9MPIN"  "PV10MPIN" "PV1MPRE"  "PV2MPRE" 
+[103] "PV3MPRE"  "PV4MPRE"  "PV5MPRE"  "PV6MPRE"  "PV7MPRE"  "PV8MPRE" 
+[109] "PV9MPRE"  "PV10MPRE"</code></pre>
+</div>
+</div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

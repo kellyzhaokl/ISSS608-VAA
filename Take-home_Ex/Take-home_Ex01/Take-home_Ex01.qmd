@@ -1,0 +1,46 @@
+---
+title: "Take-home_Ex01"
+date: "January 18, 2024"
+date-modified: "last-modified"
+execute: 
+  eval: true
+  echo: true
+  warning: false
+editor: visual
+---
+
+1.OVERVIEW
+
+Despite official claims of educational equity in Singapore, public perception highlights persistent disparities based on socioeconomic status, school type, and family background.
+
+2.OBJECTIVE
+
+Using appropriate **Exploratory Data Analysis (EDA)** methods and **ggplot2** functions to get insight.
+
+-   The distribution of Singapore students’ performance in mathematics, reading, and science.
+
+-   The relationship between these performances with schools, gender and socioeconomic status of the students.
+
+3.DATA PREPARATION
+
+3.1 Loading R packages
+
+```{r}
+pacman::p_load(tidyverse,haven)
+```
+
+3.2 Data set
+
+As we are foucesd on Singapore database. So firstly we should filter Singapore dataset. Refer to [In-class Exercise 1](https://isss608-ay2023-24t2.netlify.app/in-class_ex/in-class_ex01/in-class_ex01) for more details
+
+```{r}
+# eval: false
+stu_qqq_SG <-
+  read_rds("data/stu_qqq_SG.rds")
+```
+
+3.3 Data Preparation
+
+```{r}
+grep("PV", colnames(stu_qqq_SG), value = TRUE)
+```
