@@ -9,11 +9,11 @@ execute:
 editor: visual
 ---
 
-1.OVERVIEW
+# 1.OVERVIEW
 
 Despite official claims of educational equity in Singapore, public perception highlights persistent disparities based on socioeconomic status, school type, and family background.
 
-2.OBJECTIVE
+# 2.OBJECTIVE
 
 Using appropriate **Exploratory Data Analysis (EDA)** methods and **ggplot2** functions to get insight.
 
@@ -21,17 +21,17 @@ Using appropriate **Exploratory Data Analysis (EDA)** methods and **ggplot2**
 
 -   The relationship between these performances with schools, gender and socioeconomic status of the students.
 
-3.DATA PREPARATION
+# 3.DATA PREPARATION
 
-3.1 Loading R packages
+## 3.1 Loading R packages
 
 ```{r}
-pacman::p_load(tidyverse,haven)
+pacman::p_load(tidyverse,haven,dplyr,tidyr,ggplot2,patchwork,ggthemes)
 ```
 
-3.2 Data set
+## 3.2 Data set
 
-As we are foucesd on Singapore database. So firstly we should filter Singapore dataset. Refer to [In-class Exercise 1](https://isss608-ay2023-24t2.netlify.app/in-class_ex/in-class_ex01/in-class_ex01) for more details.
+As we are focursed on Singapore database. So firstly we should filter Singapore dataset. Refer to [In-class Exercise 1](https://isss608-ay2023-24t2.netlify.app/in-class_ex/in-class_ex01/in-class_ex01) for more details.
 
 ```{r}
 # eval: false
@@ -39,65 +39,177 @@ stu_qqq_SG <-
   read_rds("data/stu_qqq_SG.rds")
 ```
 
-3.3 Data Preparation
-```{r}
-# eval: false
-grep("PV", colnames(stu_qqq_SG), value = TRUE)
-```
+## 3.3 Data Preparation
+
+### 1.Find the relative math score data in 'stu_qqq_SG' dataset
 
 ```{r}
 # eval: false
-if (!require(devtools)) {
-  install.packages("devtools")
-  library(devtools)
-}
-devtools::install_github("eldafani/intsvy")
+# Select the specific columns and view the first few rows
+head(select(stu_qqq_SG, PV1MATH, PV2MATH, PV3MATH, PV4MATH, PV5MATH, PV6MATH, PV7MATH, PV8MATH, PV9MATH, PV10MATH))
 ```
 
+Similarly, we can find the reading and science score data and then get the average value for each course.
+
+### 2.Add new columns for math,reading and science
+
 ```{r}
-# eval: false
-pacman::p_load(intsvy)
+stu_qqq_SG <- stu_qqq_SG %>%
+  mutate(
+    Math = rowMeans(select(., starts_with("PV1MATH"), ends_with("PV10MATH")), na.rm = TRUE),
+    Reading = rowMeans(select(., starts_with("PV1READ"), ends_with("PV10READ")), na.rm = TRUE),
+    Science = rowMeans(select(., starts_with("PV1SCIE"), ends_with("PV10SCIE")), na.rm = TRUE)
+  )
 ```
 
+### 3.Create new table for later analysis
+
+Select relative columns and create new_data with 7 columns and 6606 ids. Then see the total view of the data, where find that there are 47 missing values which can be considered deleted.
+
 ```{r}
-# eval: false
-pisa_data <- readRDS("data/stu_qqq_SG.rds")
+new_data <- select(stu_qqq_SG,CNTSTUID,CNTSCHID,ST004D01T, ESCS, Math, Reading, Science)
+summary(new_data)
+new_data <- new_data %>% filter(complete.cases(.))
 ```
 
-loading package
-```{r}
-pacman::p_load(dplyr)
-```
+# 4.DATA ANALYSIS
+
+## 4.1 The distribution of Singapore students’ performance in each course
 
 ```{r}
-any(is.na(pisa_data[, paste0("PV", 1:10, "MATH")]))
-```
-
-```{r}
-# eval: false
-math_mean <- with(data = pisa_data, expr = {
-  mean(c(PV1MATH, PV2MATH, PV3MATH, PV4MATH, PV5MATH,
-         PV6MATH, PV7MATH, PV8MATH, PV9MATH, PV10MATH), na.rm = TRUE)
-})
-```
-
-::: {.panel-tabset}
-## plot1
-```{r}
-library(ggplot2)
-
-ggplot(pisa_data, aes(x = PV1MATH)) +
-  geom_histogram(binwidth = 10, fill = "blue") +
+long_data <- pivot_longer(new_data, 
+                          cols = c("Math", "Reading", "Science"),
+                          names_to = "subject", 
+                          values_to = "score")
+ggplot(long_data, aes(x = subject, y = score, fill = subject)) +
+  geom_boxplot() +  
+  scale_fill_manual(values = c("Math" = "magenta", "Reading" = "green", "Science" = "yellow")) + # 为不同的科目设置颜色
+  stat_summary(fun = mean, geom = "point", shape = 20, size = 3, color = "red") +
+  
   theme_minimal() +
-  ggtitle("Distribution of  PV1Math Scores")
-```
-## plot2
-```{r}
-library(ggplot2)
+  labs(title = "Distribution of Scores in Math, Reading, and Science",
+       x = "Subject",
+       y = "Average Score") +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 45, hjust = 1))
 
-ggplot(pisa_data, aes(x = PV2MATH)) +
-  geom_histogram(binwidth = 10, fill = "blue") +
-  theme_minimal() +
-  ggtitle("Distribution of  PV2Math Scores")
 ```
-:::
+
+From the plot, we could see that for students performance in three subjects,math is the most highest among three courses, and the next up higher is science. Reading the lowest.
+
+## 4.2 Subject Performance by gender
+
+```{r}
+ggplot(long_data, aes(x = subject, y = score, fill = factor(ST004D01T, labels = c("Female", "Male")))) +
+  geom_boxplot(position = position_dodge(width = 0.8)) +
+  scale_fill_manual(values = c("Female" = "pink", "Male" = "blue")) +
+  labs(title = "Performance Distribution by Subject and Gender",
+       x = "Subject",
+       y = "Score",
+       fill = "Gender") +
+  theme_minimal() +
+  theme(legend.title = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+From the boxplot, we could see that male tends to get higher scores in math and science than female. Female tends to perform better in Reading.
+
+## 4.3 Subject Performance by different schools
+
+```{r}
+
+# Calculate the average scores for each school and subject
+school_averages <- new_data %>%
+  group_by(CNTSCHID) %>%
+  summarize(
+    Math = mean(Math, na.rm = TRUE),
+    Reading = mean(Reading, na.rm = TRUE),
+    Science = mean(Science, na.rm = TRUE),
+    .groups = 'drop'
+  )
+
+# Find the top and bottom schools for each subject
+top_bottom_schools <- school_averages %>%
+  summarize(
+    Top_Math_ID = CNTSCHID[which.max(Math)],
+    Top_Math_Score = max(Math),
+    Bottom_Math_ID = CNTSCHID[which.min(Math)],
+    Bottom_Math_Score = min(Math),
+    Top_Reading_ID = CNTSCHID[which.max(Reading)],
+    Top_Reading_Score = max(Reading),
+    Bottom_Reading_ID = CNTSCHID[which.min(Reading)],
+    Bottom_Reading_Score = min(Reading),
+    Top_Science_ID = CNTSCHID[which.max(Science)],
+    Top_Science_Score = max(Science),
+    Bottom_Science_ID = CNTSCHID[which.min(Science)],
+    Bottom_Science_Score = min(Science)
+  )
+
+# Reshape for plotting
+school_averages_long <- school_averages %>%
+  pivot_longer(
+    cols = c(Math, Reading, Science),
+    names_to = "Subject",
+    values_to = "Average_Score"
+  )
+
+# Create the plot
+ggplot(school_averages_long, aes(x = Subject, y = Average_Score)) +
+  geom_jitter(aes(color = CNTSCHID), width = 0.2) +
+  geom_text(data = top_bottom_schools, aes(x = 1, y = Top_Math_Score, label = Top_Math_ID), vjust = 2) +
+  geom_text(data = top_bottom_schools, aes(x = 1, y = Bottom_Math_Score, label = Bottom_Math_ID), vjust = 2) +
+  geom_text(data = top_bottom_schools, aes(x = 2, y = Top_Reading_Score, label = Top_Reading_ID), vjust = -1) +
+  geom_text(data = top_bottom_schools, aes(x = 2, y = Bottom_Reading_Score, label = Bottom_Reading_ID), vjust = -1) +
+  geom_text(data = top_bottom_schools, aes(x = 3, y = Top_Science_Score, label = Top_Science_ID), vjust = -1) +
+  geom_text(data = top_bottom_schools, aes(x = 3, y = Bottom_Science_Score, label = Bottom_Science_ID), vjust = 2) +
+  labs(title = "Average Scores by Subject and School", x = "Subject", y = "Average Score") +
+  theme_minimal() +
+  theme(legend.position = "none") # Hide the legend to clean up the plot
+```
+
+From the plot, we could see that students in school 003 get highest score in math and science. Students in school 062 get the highest score in subject. However, students in school 149 perform the worst in all three courses.
+
+## 4.4 Subject Performance by socioeconomic status
+
+```{r}
+theme_setting <- theme(
+  plot.title = element_text(size = 10),  # 设置标题文字大小为10
+  plot.subtitle = element_text(size = 8),
+  plot.caption = element_text(size = 8)
+)
+
+p1 <- ggplot(data=new_data, aes(x= ESCS, y=Math)) +
+  geom_point() +
+  geom_smooth(method=lm, linewidth=0.5) +  
+  coord_cartesian(xlim=c(-3,3), ylim=c(250,850)) +
+  ggtitle("Math Scores vs. ESCS") +  
+  theme_setting
+
+p2 <- ggplot(data=new_data, aes(x= ESCS, y=Reading)) +
+  geom_point() +
+  geom_smooth(method=lm, linewidth=0.5) +  
+  coord_cartesian(xlim=c(-3,3), ylim=c(250,850)) +
+  ggtitle("Reading Scores vs. ESCS") +
+  theme_setting
+
+p3 <- ggplot(data=new_data, aes(x= ESCS, y=Science)) +
+  geom_point() +
+  geom_smooth(method=lm, linewidth=0.5) +  
+  coord_cartesian(xlim=c(-3,3), ylim=c(250,850)) +
+  ggtitle("Science Scores vs. ESCS") +
+  theme_setting
+
+patchwork <- (p1 / p2) | p3
+patchwork & theme_economist()
+```
+
+From the plot, we could see that all three subjects—Math, Reading, and Science—show a positive correlation with the Economic, Social, and Cultural Status (ESCS) index. Most of the students are in the middle class.
+
+# 5.CONCLUSION
+
+\
+Students generally score better in Math compared to Reading. Girls typically excel in Reading but may not perform as well in Science. Boys often do better in Math and Science.
+
+School 003 leads with top scores in Math and Science, which may reflect its excellent programs in these fields. School 062 shines in Reading, hinting at a strong focus on literacy. Meanwhile, school 149 lags in all subjects, which could signal various difficulties at the school.
+
+Higher socioeconomic status is linked to better grades for students.
