@@ -1,6 +1,6 @@
 ---
 title: "Take-home_Ex01"
-date: "January 18, 2024"
+date: "January 20, 2024"
 date-modified: "last-modified"
 execute: 
   eval: true
@@ -31,7 +31,7 @@ pacman::p_load(tidyverse,haven)
 
 3.2 Data set
 
-As we are foucesd on Singapore database. So firstly we should filter Singapore dataset. Refer to [In-class Exercise 1](https://isss608-ay2023-24t2.netlify.app/in-class_ex/in-class_ex01/in-class_ex01) for more details
+As we are foucesd on Singapore database. So firstly we should filter Singapore dataset. Refer to [In-class Exercise 1](https://isss608-ay2023-24t2.netlify.app/in-class_ex/in-class_ex01/in-class_ex01) for more details.
 
 ```{r}
 # eval: false
@@ -40,7 +40,64 @@ stu_qqq_SG <-
 ```
 
 3.3 Data Preparation
-
 ```{r}
+# eval: false
 grep("PV", colnames(stu_qqq_SG), value = TRUE)
 ```
+
+```{r}
+# eval: false
+if (!require(devtools)) {
+  install.packages("devtools")
+  library(devtools)
+}
+devtools::install_github("eldafani/intsvy")
+```
+
+```{r}
+# eval: false
+pacman::p_load(intsvy)
+```
+
+```{r}
+# eval: false
+pisa_data <- readRDS("data/stu_qqq_SG.rds")
+```
+
+loading package
+```{r}
+pacman::p_load(dplyr)
+```
+
+```{r}
+any(is.na(pisa_data[, paste0("PV", 1:10, "MATH")]))
+```
+
+```{r}
+# eval: false
+math_mean <- with(data = pisa_data, expr = {
+  mean(c(PV1MATH, PV2MATH, PV3MATH, PV4MATH, PV5MATH,
+         PV6MATH, PV7MATH, PV8MATH, PV9MATH, PV10MATH), na.rm = TRUE)
+})
+```
+
+::: {.panel-tabset}
+## plot1
+```{r}
+library(ggplot2)
+
+ggplot(pisa_data, aes(x = PV1MATH)) +
+  geom_histogram(binwidth = 10, fill = "blue") +
+  theme_minimal() +
+  ggtitle("Distribution of  PV1Math Scores")
+```
+## plot2
+```{r}
+library(ggplot2)
+
+ggplot(pisa_data, aes(x = PV2MATH)) +
+  geom_histogram(binwidth = 10, fill = "blue") +
+  theme_minimal() +
+  ggtitle("Distribution of  PV2Math Scores")
+```
+:::
