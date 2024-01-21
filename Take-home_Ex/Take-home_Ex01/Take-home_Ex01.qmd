@@ -53,6 +53,8 @@ Similarly, we can find the reading and science score data and then get the avera
 
 ### 2.Add new columns for math,reading and science
 
+Calculate the average score of the three courses separately.
+
 ```{r}
 stu_qqq_SG <- stu_qqq_SG %>%
   mutate(
@@ -62,7 +64,7 @@ stu_qqq_SG <- stu_qqq_SG %>%
   )
 ```
 
-### 3.Create new table for later analysis
+### 3.Create new clean table for later-on analysis
 
 Select relative columns and create new_data with 7 columns and 6606 ids. Then see the total view of the data, where find that there are 47 missing values which can be considered deleted.
 
@@ -116,8 +118,9 @@ From the boxplot, we could see that male tends to get higher scores in math and 
 
 ## 4.3 Subject Performance by different schools
 
-```{r}
+From the plot, we could see that students in school 003 get highest score in math and science. Students in school 062 get the highest score in subject. However, students in school 149 perform the worst in all three courses.
 
+```{r}
 # Calculate the average scores for each school and subject
 school_averages <- new_data %>%
   group_by(CNTSCHID) %>%
@@ -128,24 +131,7 @@ school_averages <- new_data %>%
     .groups = 'drop'
   )
 
-# Find the top and bottom schools for each subject
-top_bottom_schools <- school_averages %>%
-  summarize(
-    Top_Math_ID = CNTSCHID[which.max(Math)],
-    Top_Math_Score = max(Math),
-    Bottom_Math_ID = CNTSCHID[which.min(Math)],
-    Bottom_Math_Score = min(Math),
-    Top_Reading_ID = CNTSCHID[which.max(Reading)],
-    Top_Reading_Score = max(Reading),
-    Bottom_Reading_ID = CNTSCHID[which.min(Reading)],
-    Bottom_Reading_Score = min(Reading),
-    Top_Science_ID = CNTSCHID[which.max(Science)],
-    Top_Science_Score = max(Science),
-    Bottom_Science_ID = CNTSCHID[which.min(Science)],
-    Bottom_Science_Score = min(Science)
-  )
-
-# Reshape for plotting
+# Reshape the data to a long format for plotting
 school_averages_long <- school_averages %>%
   pivot_longer(
     cols = c(Math, Reading, Science),
@@ -153,51 +139,63 @@ school_averages_long <- school_averages %>%
     values_to = "Average_Score"
   )
 
-# Create the plot
-ggplot(school_averages_long, aes(x = Subject, y = Average_Score)) +
-  geom_jitter(aes(color = CNTSCHID), width = 0.2) +
-  geom_text(data = top_bottom_schools, aes(x = 1, y = Top_Math_Score, label = Top_Math_ID), vjust = 2) +
-  geom_text(data = top_bottom_schools, aes(x = 1, y = Bottom_Math_Score, label = Bottom_Math_ID), vjust = 2) +
-  geom_text(data = top_bottom_schools, aes(x = 2, y = Top_Reading_Score, label = Top_Reading_ID), vjust = -1) +
-  geom_text(data = top_bottom_schools, aes(x = 2, y = Bottom_Reading_Score, label = Bottom_Reading_ID), vjust = -1) +
-  geom_text(data = top_bottom_schools, aes(x = 3, y = Top_Science_Score, label = Top_Science_ID), vjust = -1) +
-  geom_text(data = top_bottom_schools, aes(x = 3, y = Bottom_Science_Score, label = Bottom_Science_ID), vjust = 2) +
-  labs(title = "Average Scores by Subject and School", x = "Subject", y = "Average Score") +
-  theme_minimal() +
-  theme(legend.position = "none") # Hide the legend to clean up the plot
-```
+# Find the top and bottom schools for each subject
+top_schools <- school_averages_long %>%
+  group_by(Subject) %>%
+  slice_max(Average_Score, n = 1) %>%
+  ungroup()
 
-From the plot, we could see that students in school 003 get highest score in math and science. Students in school 062 get the highest score in subject. However, students in school 149 perform the worst in all three courses.
+bottom_schools <- school_averages_long %>%
+  group_by(Subject) %>%
+  slice_min(Average_Score, n = 1) %>%
+  ungroup()
+
+# Create the scatter plot
+ggplot(school_averages_long, aes(x = Subject, y = Average_Score)) +
+  geom_point(aes(color = CNTSCHID), position = position_jitterdodge()) +
+  labs(title = "Subject Performance by Different Schools",
+       x = "Subject", 
+       y = "Average Score") +
+  theme_minimal() +
+  geom_text(data = top_schools, aes(label = CNTSCHID), vjust = 2, color = "blue") +
+  geom_text(data = bottom_schools, aes(label = CNTSCHID), vjust = 1, color = "red")
+```
 
 ## 4.4 Subject Performance by socioeconomic status
 
 ```{r}
 theme_setting <- theme(
-  plot.title = element_text(size = 10),  # 设置标题文字大小为10
+  plot.title = element_text(size = 10),
   plot.subtitle = element_text(size = 8),
-  plot.caption = element_text(size = 8)
+  plot.caption = element_text(size = 8),
+  axis.text.x = element_text(angle = 45, hjust = 1) # Adjust for better readability
 )
 
-p1 <- ggplot(data=new_data, aes(x= ESCS, y=Math)) +
-  geom_point() +
+# Adjust the alpha and size in geom_point for transparency and smaller points
+p1 <- ggplot(data=new_data, aes(x= ESCS, y=Math, color = "Math")) +
+  geom_point(alpha = 0.5, size = 1.5) +
   geom_smooth(method=lm, linewidth=0.5) +  
   coord_cartesian(xlim=c(-3,3), ylim=c(250,850)) +
   ggtitle("Math Scores vs. ESCS") +  
-  theme_setting
+  theme_setting +
+  scale_color_manual(values = c("Math" = "magenta"))
 
-p2 <- ggplot(data=new_data, aes(x= ESCS, y=Reading)) +
-  geom_point() +
+p2 <- ggplot(data=new_data, aes(x= ESCS, y=Reading, color = "Reading")) +
+  geom_point(alpha = 0.5, size = 1.5) +
   geom_smooth(method=lm, linewidth=0.5) +  
   coord_cartesian(xlim=c(-3,3), ylim=c(250,850)) +
   ggtitle("Reading Scores vs. ESCS") +
-  theme_setting
+  theme_setting +
+  scale_color_manual(values = c("Reading" = "green"))
 
-p3 <- ggplot(data=new_data, aes(x= ESCS, y=Science)) +
-  geom_point() +
+p3 <- ggplot(data=new_data, aes(x= ESCS, y=Science, color = "Science")) +
+  geom_point(alpha = 0.5, size = 1.5) +
   geom_smooth(method=lm, linewidth=0.5) +  
   coord_cartesian(xlim=c(-3,3), ylim=c(250,850)) +
   ggtitle("Science Scores vs. ESCS") +
-  theme_setting
+  theme_setting +
+  scale_color_manual(values = c("Science" = "yellow"))
+
 
 patchwork <- (p1 / p2) | p3
 patchwork & theme_economist()
