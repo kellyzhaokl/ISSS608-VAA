@@ -1,5 +1,5 @@
 ---
-title: "Hands-on_Ex02"
+title: "2 Beyond ggplot2 Fundamentals"
 author: "Zhao Xinyue"
 date: "January 17, 2024"
 date-modified: "last-modified"
