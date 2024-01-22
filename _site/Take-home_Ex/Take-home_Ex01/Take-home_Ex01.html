@@ -189,12 +189,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#loading-r-packages" id="toc-loading-r-packages" class="nav-link" data-scroll-target="#loading-r-packages">3.1 Loading R packages</a></li>
   <li><a href="#data-set" id="toc-data-set" class="nav-link" data-scroll-target="#data-set">3.2 Data set</a></li>
-  <li><a href="#data-preparation-1" id="toc-data-preparation-1" class="nav-link" data-scroll-target="#data-preparation-1">3.3 Data Preparation</a>
-  <ul class="collapse">
-  <li><a href="#find-the-relative-math-score-data-in-stu_qqq_sg-dataset" id="toc-find-the-relative-math-score-data-in-stu_qqq_sg-dataset" class="nav-link" data-scroll-target="#find-the-relative-math-score-data-in-stu_qqq_sg-dataset">1.Find the relative math score data in ‘stu_qqq_SG’ dataset</a></li>
-  <li><a href="#add-new-columns-for-mathreading-and-science" id="toc-add-new-columns-for-mathreading-and-science" class="nav-link" data-scroll-target="#add-new-columns-for-mathreading-and-science">2.Add new columns for math,reading and science</a></li>
-  <li><a href="#create-new-clean-table-for-later-on-analysis" id="toc-create-new-clean-table-for-later-on-analysis" class="nav-link" data-scroll-target="#create-new-clean-table-for-later-on-analysis">3.Create new clean table for later-on analysis</a></li>
-  </ul></li>
+  <li><a href="#data-preparation-1" id="toc-data-preparation-1" class="nav-link" data-scroll-target="#data-preparation-1">3.3 Data Preparation</a></li>
   </ul></li>
   <li><a href="#data-analysis" id="toc-data-analysis" class="nav-link" data-scroll-target="#data-analysis">4.DATA ANALYSIS</a>
   <ul class="collapse">
@@ -227,34 +222,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
   </div>
   
-    <div>
-    <div class="quarto-title-meta-heading">Modified</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date-modified">January 21, 2024</p>
-    </div>
-  </div>
     
   </div>
   
 
 </header>
 
-<section id="overview" class="level1">
-<h1>1.OVERVIEW</h1>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">1.OVERVIEW</h2>
 <p>Despite official claims of educational equity in Singapore, public perception highlights persistent disparities based on socioeconomic status, school type, and family background.</p>
 </section>
-<section id="objective" class="level1">
-<h1>2.OBJECTIVE</h1>
+<section id="objective" class="level2">
+<h2 class="anchored" data-anchor-id="objective">2.OBJECTIVE</h2>
 <p>Using appropriate&nbsp;<strong>Exploratory Data Analysis (EDA)</strong>&nbsp;methods and&nbsp;<strong>ggplot2</strong>&nbsp;functions to get insight.</p>
 <ul>
 <li><p>The distribution of Singapore students’ performance in mathematics, reading, and science.</p></li>
 <li><p>The relationship between these performances with schools, gender and socioeconomic status of the students.</p></li>
 </ul>
 </section>
-<section id="data-preparation" class="level1">
-<h1>3.DATA PREPARATION</h1>
-<section id="loading-r-packages" class="level2">
-<h2 class="anchored" data-anchor-id="loading-r-packages">3.1 Loading R packages</h2>
+<section id="data-preparation" class="level2">
+<h2 class="anchored" data-anchor-id="data-preparation">3.DATA PREPARATION</h2>
+<section id="loading-r-packages" class="level3">
+<h3 class="anchored" data-anchor-id="loading-r-packages">3.1 Loading R packages</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -262,8 +251,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 </section>
-<section id="data-set" class="level2">
-<h2 class="anchored" data-anchor-id="data-set">3.2 Data set</h2>
+<section id="data-set" class="level3">
+<h3 class="anchored" data-anchor-id="data-set">3.2 Data set</h3>
 <p>As we are focursed on Singapore database. So firstly we should filter Singapore dataset. Refer to <a href="https://isss608-ay2023-24t2.netlify.app/in-class_ex/in-class_ex01/in-class_ex01">In-class Exercise 1</a> for more details.</p>
 <div class="cell">
 <details>
@@ -274,10 +263,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 </section>
-<section id="data-preparation-1" class="level2">
-<h2 class="anchored" data-anchor-id="data-preparation-1">3.3 Data Preparation</h2>
-<section id="find-the-relative-math-score-data-in-stu_qqq_sg-dataset" class="level3">
-<h3 class="anchored" data-anchor-id="find-the-relative-math-score-data-in-stu_qqq_sg-dataset">1.Find the relative math score data in ‘stu_qqq_SG’ dataset</h3>
+<section id="data-preparation-1" class="level3">
+<h3 class="anchored" data-anchor-id="data-preparation-1">3.3 Data Preparation</h3>
+<section id="find-the-relative-math-score-data-in-stu_qqq_sg-dataset" class="level4">
+<h4 class="anchored" data-anchor-id="find-the-relative-math-score-data-in-stu_qqq_sg-dataset">1.Find the relative math score data in ‘stu_qqq_SG’ dataset</h4>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -300,8 +289,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Similarly, we can find the reading and science score data and then get the average value for each course.</p>
 </section>
-<section id="add-new-columns-for-mathreading-and-science" class="level3">
-<h3 class="anchored" data-anchor-id="add-new-columns-for-mathreading-and-science">2.Add new columns for math,reading and science</h3>
+<section id="add-new-columns-for-mathreading-and-science" class="level4">
+<h4 class="anchored" data-anchor-id="add-new-columns-for-mathreading-and-science">2.Add new columns for math,reading and science</h4>
 <p>Calculate the average score of the three courses separately.</p>
 <div class="cell">
 <details>
@@ -315,8 +304,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 </section>
-<section id="create-new-clean-table-for-later-on-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="create-new-clean-table-for-later-on-analysis">3.Create new clean table for later-on analysis</h3>
+<section id="create-new-clean-table-for-later-on-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="create-new-clean-table-for-later-on-analysis">3.Create new clean table for later-on analysis</h4>
 <p>Select relative columns and create new_data with 7 columns and 6606 ids. Then see the total view of the data, where find that there are 47 missing values which can be considered deleted.</p>
 <div class="cell">
 <details>
@@ -350,10 +339,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 </section>
 </section>
-<section id="data-analysis" class="level1">
-<h1>4.DATA ANALYSIS</h1>
-<section id="the-distribution-of-singapore-students-performance-in-each-course" class="level2">
-<h2 class="anchored" data-anchor-id="the-distribution-of-singapore-students-performance-in-each-course">4.1 The distribution of Singapore students’ performance in each course</h2>
+<section id="data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="data-analysis">4.DATA ANALYSIS</h2>
+<section id="the-distribution-of-singapore-students-performance-in-each-course" class="level3">
+<h3 class="anchored" data-anchor-id="the-distribution-of-singapore-students-performance-in-each-course">4.1 The distribution of Singapore students’ performance in each course</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -379,8 +368,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>From the plot, we could see that for students performance in three subjects,math is the most highest among three courses, and the next up higher is science. Reading the lowest.</p>
 </section>
-<section id="subject-performance-by-gender" class="level2">
-<h2 class="anchored" data-anchor-id="subject-performance-by-gender">4.2 Subject Performance by gender</h2>
+<section id="subject-performance-by-gender" class="level3">
+<h3 class="anchored" data-anchor-id="subject-performance-by-gender">4.2 Subject Performance by gender</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -401,8 +390,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>From the boxplot, we could see that male tends to get higher scores in math and science than female. Female tends to perform better in Reading.</p>
 </section>
-<section id="subject-performance-by-different-schools" class="level2">
-<h2 class="anchored" data-anchor-id="subject-performance-by-different-schools">4.3 Subject Performance by different schools</h2>
+<section id="subject-performance-by-different-schools" class="level3">
+<h3 class="anchored" data-anchor-id="subject-performance-by-different-schools">4.3 Subject Performance by different schools</h3>
 <p>From the plot, we could see that students in school 003 get highest score in math and science. Students in school 062 get the highest score in subject. However, students in school 149 perform the worst in all three courses.</p>
 <div class="cell">
 <details>
@@ -451,13 +440,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="subject-performance-by-socioeconomic-status" class="level2">
-<h2 class="anchored" data-anchor-id="subject-performance-by-socioeconomic-status">4.4 Subject Performance by socioeconomic status</h2>
+<section id="subject-performance-by-socioeconomic-status" class="level3">
+<h3 class="anchored" data-anchor-id="subject-performance-by-socioeconomic-status">4.4 Subject Performance by socioeconomic status</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>theme_setting <span class="ot">&lt;-</span> <span class="fu">theme</span>(</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>) <span class="co"># Adjust for better readability</span></span>
@@ -468,7 +457,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm, <span class="at">linewidth=</span><span class="fl">0.5</span>) <span class="sc">+</span>  </span>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">250</span>,<span class="dv">850</span>)) <span class="sc">+</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Math Scores vs. ESCS"</span>) <span class="sc">+</span>  </span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Math vs. ESCS"</span>) <span class="sc">+</span>  </span>
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  theme_setting <span class="sc">+</span></span>
 <span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Math"</span> <span class="ot">=</span> <span class="st">"magenta"</span>))</span>
 <span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
@@ -476,7 +465,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
 <span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm, <span class="at">linewidth=</span><span class="fl">0.5</span>) <span class="sc">+</span>  </span>
 <span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">250</span>,<span class="dv">850</span>)) <span class="sc">+</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Reading Scores vs. ESCS"</span>) <span class="sc">+</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Reading vs. ESCS"</span>) <span class="sc">+</span></span>
 <span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  theme_setting <span class="sc">+</span></span>
 <span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Reading"</span> <span class="ot">=</span> <span class="st">"green"</span>))</span>
 <span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a></span>
@@ -484,7 +473,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
 <span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm, <span class="at">linewidth=</span><span class="fl">0.5</span>) <span class="sc">+</span>  </span>
 <span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">250</span>,<span class="dv">850</span>)) <span class="sc">+</span></span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Science Scores vs. ESCS"</span>) <span class="sc">+</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Science vs. ESCS"</span>) <span class="sc">+</span></span>
 <span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>  theme_setting <span class="sc">+</span></span>
 <span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Science"</span> <span class="ot">=</span> <span class="st">"yellow"</span>))</span>
 <span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
@@ -499,8 +488,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>From the plot, we could see that all three subjects—Math, Reading, and Science—show a positive correlation with the Economic, Social, and Cultural Status (ESCS) index. Most of the students are in the middle class.</p>
 </section>
 </section>
-<section id="conclusion" class="level1">
-<h1>5.CONCLUSION</h1>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">5.CONCLUSION</h2>
 <p><br>
 Students generally score better in Math compared to Reading. Girls typically excel in Reading but may not perform as well in Science. Boys often do better in Math and Science.</p>
 <p>School 003 leads with top scores in Math and Science, which may reflect its excellent programs in these fields. School 062 shines in Reading, hinting at a strong focus on literacy. Meanwhile, school 149 lags in all subjects, which could signal various difficulties at the school.</p>
