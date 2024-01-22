@@ -96,9 +96,8 @@ ggplot(long_data, aes(x = subject, y = score, fill = subject)) +
 
 ```
 
-::: {#myDiv .highlighted-box style="border: 2px dashed pink;border-radius: 10px;"}
-From the plot, we could see that for students performance in three subjects,math is the most highest among three courses, and the next up higher is science. Reading the lowest.
-:::
+| ⛳
+| From the plot, we could see that for students performance in three subjects,math is the most highest among three courses, and the next up higher is science. Reading the lowest.
 
 ### 4.2 Subject Performance by gender
 
@@ -115,15 +114,13 @@ ggplot(long_data, aes(x = subject, y = score, fill = factor(ST004D01T, labels = 
         axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-::: {.highlighted-box style="border: 2px dashed pink;border-radius: 10px;"}
-From the boxplot, we could see that male tends to get higher scores in math and science than female. Female tends to perform better in Reading.
-:::
+| ⛳ 
+| From the boxplot, we could see that male tends to get higher scores in math and science than female. Female tends to perform better in Reading.
 
 ### 4.3 Subject Performance by different schools
 
-::: {.highlighted-box style="border: 2px dashed pink;border-radius: 10px;"}
-From the plot, we could see that students in school 003 get highest score in math and science. Students in school 062 get the highest score in subject. However, students in school 149 perform the worst in all three courses.
-:::
+| ⛳
+| From the plot, we could see that students in school 003 get highest score in math and science. Students in school 062 get the highest score in subject. However, students in school 149 perform the worst in all three courses.
 
 ```{r}
 # Calculate the average scores for each school and subject
@@ -206,9 +203,8 @@ patchwork <- (p1 / p2) | p3
 patchwork & theme_economist()
 ```
 
-::: {.highlighted-box style="border: 2px dashed pink;border-radius: 10px;"}
-From the plot, we could see that all three subjects—Math, Reading, and Science—show a positive correlation with the Economic, Social, and Cultural Status (ESCS) index. Most of the students are in the middle class.
-:::
+| ⛳
+| From the plot, we could see that all three subjects—Math, Reading, and Science—show a positive correlation with the Economic, Social, and Cultural Status (ESCS) index. Most of the students are in the middle class.
 
 ## 5.CONCLUSION
 
