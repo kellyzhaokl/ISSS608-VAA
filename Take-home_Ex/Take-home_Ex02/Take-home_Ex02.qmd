@@ -9,7 +9,7 @@ execute:
 editor: visual
 ---
 
-## 1 Overview {style="border-bottom: 1px solid #cccccc;"}
+## 1 Overview
 
 In this Take-home Exercise 2, I have chosen one of my classmate’s Take-home Exercise 1 submission and analyzed the visualization in terms of **clarity and aesthetics**.
 
@@ -20,7 +20,7 @@ pacman::p_load(tidyverse, haven, knitr, kableExtra, intsvy, ggrepel, patchwork,
                ggthemes, hrbrthemes, ggdist, ggridges, colorspace, gridExtra)
 ```
 
-### 1.2 Dataset 
+### 1.2 Dataset
 
 As we are focursed on Singapore database. So firstly we should filter Singapore dataset. Refer to [In-class Exercise 1](https://isss608-ay2023-24t2.netlify.app/in-class_ex/in-class_ex01/in-class_ex01) for more details.
 
@@ -31,7 +31,7 @@ stu_qqq_SG <-
 
 ```
 
-## 2 DataViz Makeover {style="border-bottom: 1px solid #cccccc;"}
+## 2 DataViz Makeover
 
 ### 2.1 Distribution of Mean Math/ Reading/Science Scores
 
@@ -377,12 +377,10 @@ ggplot(long_data,
 2.  The consistent layout across the three subjects (Math, Reading, Science) and the alignment of categories across the facets maintain a uniform look, which is pleasing to the eye and aids in comparing across subjects without the distraction of differing formats or scales.
 :::
 
-## 3 Learning Point {style="border-bottom: 1px solid #cccccc;"}
+## 3 Learning Point
 
 By reviewing my classmates' work, I've learned the importance of variety in data visualization.
 
 For instance, I've observed that complex numerical data can become more accessible when first categorized and then depicted using an appropriate plot type. This step of classification allows for a cleaner and more organized presentation, making it easier for the audience to digest the information.
 
 Furthermore, I've realized that the impact of a visualization is often in the details. The same chart can be transformed from a simple illustration to a compelling narrative with the strategic use of colors, adjusted titles, and the inclusion of helpful annotations like auxiliary lines. These seemingly minor tweaks can significantly enhance the visualization's ability to engage and inform.
-
-This peer-learning approach has not only expanded my toolkit of design strategies but also encouraged a deeper appreciation for the creative process behind effective data communication.
