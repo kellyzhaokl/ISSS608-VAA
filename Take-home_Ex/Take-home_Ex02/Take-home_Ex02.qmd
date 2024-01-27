@@ -305,7 +305,9 @@ p3 <- ggplot(data=stu_qqq_SG_final,
 2.The layout is clean and uncluttered, with a clear demarcation between the different plots, which improves readability and overall visual appeal.
 :::
 
-#### 2.4.1 Original Re**lationship between Performances with Socio Economic Status**
+### 2.4 Original Re**lationship between Performances with Socio Economic Status**
+
+#### 2.4.1 Original Version
 
 ![](images/clipboard-3444555440.png)
 
