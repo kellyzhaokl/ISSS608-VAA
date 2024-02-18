@@ -27,7 +27,7 @@ As for the rainfall insights above, I will apply appropriate interactive techniq
 pacman::p_load(tidyverse,haven,dplyr,tidyr,ggplot2,plotly,patchwork,ggthemes,gganimate,readr,ggridges,ggdist)
 ```
 
-### 3.2 Import Data
+### 3.2 Data Preparation
 
 The data set is downloaded from [Meteorological Service Singapore](http://www.weather.gov.sg/home/) website. I chose rainfall records of Changi station for August (dry month) and December (wet month) of the years 1983, 1993, 2003, 2013, and 2023 to see the distribution and trends.
 
@@ -138,16 +138,17 @@ Rainfall_Days <- combined_data %>%
 ggplot_object <- ggplot(Rainfall_Days, aes(x = Year, y = Rainy_Days, group = Month, color = Month)) +
   geom_line() +
   geom_point() +
-  scale_color_manual(values = c("August" = "pink", "December" = "lightblue")) + # Set the line colors manually
+  scale_color_manual(values = c("August" = "pink", "December" = "lightblue")) +
+  scale_x_continuous(breaks = c(1983, 1993, 2003, 2013, 2023)) + # Set specific breaks for the x-axis
   labs(title = "The Discrepancy Of Rainydays Trends by year",
        x = "Year",
        y = "Rainy Days",
        color = "Month") +
   theme_minimal() +
-  theme(legend.position = "bottom") # Change to "bottom" to show the legend
+  theme(legend.position = "bottom") # Ensure the legend is displayed
 
 # Convert the ggplot object to a plotly object for interactivity
-plotly_object <- ggplotly(ggplot_object, tooltip = c("y", "color")) # Specify which data to show in the tooltip
+plotly_object <- ggplotly(ggplot_object, tooltip = c("y", "color"))
 
 # Display the interactive plot
 plotly_object
@@ -156,5 +157,5 @@ plotly_object
 ::: callout-tip
 ## Insight
 
-From the above plot, we can see that the difference is getting larger from 2003 to 2023, which indicates that the contrast between the wet month and dry month is likely to be more pronounced. Of course, we need more dataset to validate the insight in the future.
+From the above plot, we can see that the difference is getting larger from 2003 to 2023, which indicates that the contrast between the wet month and dry month is likely to be more pronounced. Of course, we need more datasets to validate the insight in the future.
 :::
