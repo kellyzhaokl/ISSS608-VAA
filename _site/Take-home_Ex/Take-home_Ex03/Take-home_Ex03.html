@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2024-02-18">
+
+<title>ZXY’s Website - Take-home_Ex03</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="../../site_libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="../../site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="../../site_libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="../../site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+<script src="../../site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="../../site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="../../site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">ZXY’s Website</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hands-on-exercise" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Hands-on Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hands-on-exercise">    
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html" rel="" target="">
+ <span class="dropdown-text">Hands-on Exercise 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html" rel="" target="">
+ <span class="dropdown-text">Hands-on Exercise 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03.html" rel="" target="">
+ <span class="dropdown-text">Hands-on Exercise 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04.html" rel="" target="">
+ <span class="dropdown-text">Hands-on Exercise 4</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex05/Hands-on_Ex05.html" rel="" target="">
+ <span class="dropdown-text">Hands-on Exercise 5</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-in-class-exercise" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">In-class Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-in-class-exercise">    
+        <li>
+    <a class="dropdown-item" href="../../In-class_Ex/In-class_Ex01/In-class_Ex01.html" rel="" target="">
+ <span class="dropdown-text">In-class Exercise 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../In-class_Ex/In-class_Ex02/In-class_Ex02.html" rel="" target="">
+ <span class="dropdown-text">In-class Exercise 2</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-take-home-exercise" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Take-home Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-take-home-exercise">    
+        <li>
+    <a class="dropdown-item" href="../../Take-home_Ex/Take-home_Ex01/Take-home_Ex01.html" rel="" target="">
+ <span class="dropdown-text">Take-home Exercise 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Take-home_Ex/Take-home_Ex02/Take-home_Ex02.html" rel="" target="">
+ <span class="dropdown-text">Take-home Exercise 2</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">1 Overview</a></li>
+  <li><a href="#objective" id="toc-objective" class="nav-link" data-scroll-target="#objective">2 Objective</a></li>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">3 DATA PREPARATION</a>
+  <ul class="collapse">
+  <li><a href="#loading-r-packages" id="toc-loading-r-packages" class="nav-link" data-scroll-target="#loading-r-packages">3.1 Loading R packages</a></li>
+  <li><a href="#import-data" id="toc-import-data" class="nav-link" data-scroll-target="#import-data">3.2 Import Data</a></li>
+  </ul></li>
+  <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization">4 Data visualization</a>
+  <ul class="collapse">
+  <li><a href="#rainfall-distribution-between-dry-and-wet-months" id="toc-rainfall-distribution-between-dry-and-wet-months" class="nav-link" data-scroll-target="#rainfall-distribution-between-dry-and-wet-months">4.1 Rainfall distribution between dry and wet months</a></li>
+  <li><a href="#further-insight-about-the-rainy-days" id="toc-further-insight-about-the-rainy-days" class="nav-link" data-scroll-target="#further-insight-about-the-rainy-days">4.2 Further insight about the rainy days</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Take-home_Ex03</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 18, 2024</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">February 18, 2024</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">1 Overview</h2>
+<p>According to an office report as shown in the infographic below, there are some insights about climate change in Singapore.</p>
+<p><img src="images/clipboard-1758350966.png" class="img-fluid"></p>
+</section>
+<section id="objective" class="level2">
+<h2 class="anchored" data-anchor-id="objective">2 Objective</h2>
+<p>As for the rainfall insights above, I will apply appropriate interactive techniques to enhance the user experience in data discovery and visual story-telling to see the <strong>contrast</strong> between the wet months (November to January) and dry months (February and June to September) .</p>
+</section>
+<section id="data-preparation" class="level2">
+<h2 class="anchored" data-anchor-id="data-preparation">3 DATA PREPARATION</h2>
+<section id="loading-r-packages" class="level3">
+<h3 class="anchored" data-anchor-id="loading-r-packages">3.1 Loading R packages</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse,haven,dplyr,tidyr,ggplot2,plotly,patchwork,ggthemes,gganimate,readr,ggridges,ggdist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="import-data" class="level3">
+<h3 class="anchored" data-anchor-id="import-data">3.2 Import Data</h3>
+<p>The data set is downloaded from <a href="http://www.weather.gov.sg/home/">Meteorological Service Singapore</a>&nbsp;website. I chose rainfall records of Changi station for August (dry month) and December (wet month) of the years 1983, 1993, 2003, 2013, and 2023 to see the distribution and trends.</p>
+<p>As we just focused on the rainfall distribution, so i only chose four columns: <strong>Year, Month, Day,</strong>&nbsp;and&nbsp;<strong>Daily Rainfall Total (mm).</strong></p>
+<section id="combine-august-data" class="level4">
+<h4 class="anchored" data-anchor-id="combine-august-data">3.2.1 Combine August Data</h4>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List of file paths</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Aug_paths <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"data/DAILYDATA_S24_198308.csv"</span>, <span class="st">"data/DAILYDATA_S24_199308.csv"</span>, </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">"data/DAILYDATA_S24_200308.csv"</span>, <span class="st">"data/DAILYDATA_S24_201308.csv"</span>, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                <span class="st">"data/DAILYDATA_S24_202308.csv"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Read and combine all files into one data frame</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>combined_Aug <span class="ot">&lt;-</span> Aug_paths <span class="sc">%&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(read_csv, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">encoding =</span> <span class="st">"latin1"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Year, Month, Day, <span class="st">`</span><span class="at">Daily Rainfall Total (mm)</span><span class="st">`</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>combined_Aug <span class="ot">&lt;-</span> combined_Aug <span class="sc">%&gt;%</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month =</span> <span class="st">"August"</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the combined dataset</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(combined_Aug)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+   Year Month    Day `Daily Rainfall Total (mm)`
+  &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;                       &lt;dbl&gt;
+1  1983 August     1                         0  
+2  1983 August     2                         6.4
+3  1983 August     3                         2.8
+4  1983 August     4                         3.7
+5  1983 August     5                        18.7
+6  1983 August     6                         0  </code></pre>
+</div>
+</div>
+</section>
+<section id="combine-december-data" class="level4">
+<h4 class="anchored" data-anchor-id="combine-december-data">3.2.2 Combine December Data</h4>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># December data</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Dec_paths <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"data/DAILYDATA_S24_198312.csv"</span>, <span class="st">"data/DAILYDATA_S24_199312.csv"</span>, </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">"data/DAILYDATA_S24_200312.csv"</span>, <span class="st">"data/DAILYDATA_S24_201312.csv"</span>, </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                <span class="st">"data/DAILYDATA_S24_202312.csv"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Read and combine all files into one data frame</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>combined_Dec <span class="ot">&lt;-</span> Dec_paths <span class="sc">%&gt;%</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(read_csv, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">encoding =</span> <span class="st">"latin1"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Year, Month, Day, <span class="st">`</span><span class="at">Daily Rainfall Total (mm)</span><span class="st">`</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>combined_Dec <span class="ot">&lt;-</span> combined_Dec <span class="sc">%&gt;%</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month =</span> <span class="st">"December"</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the combined dataset</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(combined_Dec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+   Year Month      Day `Daily Rainfall Total (mm)`
+  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;                       &lt;dbl&gt;
+1  1983 December     1                         2.8
+2  1983 December     2                         1.7
+3  1983 December     3                         5  
+4  1983 December     4                         8.2
+5  1983 December     5                         0  
+6  1983 December     6                         0  </code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="data-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="data-visualization">4 Data visualization</h2>
+<section id="rainfall-distribution-between-dry-and-wet-months" class="level3">
+<h3 class="anchored" data-anchor-id="rainfall-distribution-between-dry-and-wet-months">4.1 Rainfall distribution between dry and wet months</h3>
+<p>As we need to compare if there is any difference between August and December, we could use the mean value of each year for different months to see if there is any difference. We can also compare the distribution in large rainfall values to see if there is any chance that certain month has much more proportion. Thus, I chose to use a jitter plot to see the data.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>combined_data <span class="ot">&lt;-</span> <span class="fu">rbind</span>(combined_Aug, combined_Dec)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the mean rainfall for each year and month</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>mean_rainfall <span class="ot">&lt;-</span> combined_data <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year, Month) <span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">Daily Rainfall Total (mm)</span><span class="st">`</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a ggplot object with jitter, mean points and lines for each month</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>ggplot_object <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(combined_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(Year), <span class="at">y =</span> <span class="st">`</span><span class="at">Daily Rainfall Total (mm)</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">color =</span> Month), <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">height =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="dv">2</span>,<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> mean_rainfall, <span class="fu">aes</span>(<span class="at">y =</span> Mean, <span class="at">color =</span> Month), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> mean_rainfall, <span class="fu">aes</span>(<span class="at">y =</span> Mean, <span class="at">color =</span> Month, <span class="at">group =</span> Month), <span class="at">size =</span> <span class="fl">0.3</span>, <span class="at">linetype =</span> <span class="st">"dotted"</span>) <span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"August"</span> <span class="ot">=</span> <span class="st">"red"</span>, <span class="st">"December"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Changi: Daily Rainfall (1983-2023)"</span>,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Daily Rainfall Total (mm)"</span>,</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Month"</span>) <span class="sc">+</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjusting y-axis to increment by 25</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>ggplot_object <span class="ot">&lt;-</span> ggplot_object <span class="sc">+</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fu">max</span>(combined_data<span class="sc">$</span><span class="st">`</span><span class="at">Daily Rainfall Total (mm)</span><span class="st">`</span>), <span class="at">by =</span> <span class="dv">25</span>))</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the ggplot object to a plotly object for interactivity</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>plotly_object <span class="ot">&lt;-</span> <span class="fu">ggplotly</span>(ggplot_object)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>plotly_object</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-ca5d741ce19e542887f2" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-ca5d741ce19e542887f2">{"x":{"data":[{"x":[1.1950445783324539,0.87510832464322452,0.94007799904793499,1.1490056674927474,1.0591047273017467,0.96355856452137234,0.92698316061869268,1.0146186730824411,1.0250344397500157,0.85865497021004555,1.0085757784545422,0.8623773955740035,1.1300459052436054,1.0519944111816586,1.1075985148549079,0.82689525354653592,0.93139381529763343,0.93311204742640252,1.0424687727354467,1.0850971690379083,0.9455271362327039,1.1060058569535614,1.1710259112529458,0.87470115441828966,1.0667411649599672,0.88486832268536086,0.84610163411125539,1.0686998031102122,1.0483459669165314,1.0179216090589762,0.97540756482630964,1.8947539554908872,1.954766172543168,1.9739362513646483,1.8715406232513487,2.0702590378932655,2.1260812299326064,1.8346825585700572,2.006108533870429,1.9541136809624731,1.8627711319364608,2.0320720102638008,2.0600404043681921,1.8167238566093147,2.1536875903606414,1.9548647550866007,1.9329104370437562,1.9669804822653532,2.1960030279122291,1.890578290168196,1.8905879857949912,1.9502261162735521,1.865660071745515,1.9490427912212909,1.8218587697483599,1.8069441028870643,1.9601954521611333,2.1132067903876304,2.1381773553788661,2.0210470290854574,2.1992154933512209,1.9303459738381208,2.8594817793928087,2.9353074222803115,3.0464199888519943,2.823545867204666,2.9457536058500411,3.0494311450049283,2.930085755698383,3.0293072518892585,2.9723713141866028,3.1628192845731973,3.0476542761549354,3.1079467833042145,2.8076029236428441,3.0804666279815138,3.0328533386811616,3.0907958167605103,3.0629302196204664,2.8398025952279569,2.8230813689529897,2.8204286547377704,3.0719472877681255,3.0210575509816406,3.0030387517064812,2.9473730233497917,3.0980636557564138,3.1387874274514616,3.0255452661775051,2.8200604809448122,3.0307655110023917,3.1122646415606141,3.1467324441298841,3.8502903932705523,3.9970469867810605,4.0241624231450261,3.9799549967981873,3.8842659777030351,4.1868179788812991,3.9622958380728961,4.1541355417110024,4.1589988065883521,3.9082526466809213,4.0896111261099577,3.9348133955150844,4.1615302952006461,4.1085258619859815,4.013776809256524,3.8478006230667234,3.8291191254742443,4.048253699950874,3.9195567248389125,4.105273681972176,3.8142982229590414,4.0841369163244963,4.0692669752985235,3.825750134512782,4.1102655292488635,4.0497912840917705,3.8371529053896665,3.9404303599148989,3.9488496819511054,3.9395390850491823,4.0535351021215318,5.0569396347738804,5.0302235420793293,5.1746974657289684,5.0856500914320346,5.0878293504007157,4.9253590463660659,5.0921984671615066,4.8406843590550128,5.1265271406620743,5.0646002080291508,5.1773657853715118,5.0344218665733935,4.8267399514093992,5.0202391392551364,4.9654751561582087,4.8900031234137717,5.0769109737128018,4.8757808949798349,4.8702689653262494,4.9579448881559074,5.0624746686778961,4.9873328811489044,5.1521788154728707,4.8609443595632911,5.1291499290615317,5.0148567506112158,4.9038538856431844,5.0013116951100525,5.1601431734859942,4.9870111653581262,5.0739016570150852],"y":[0,6.4000000000000004,2.7999999999999998,3.7000000000000002,18.699999999999999,0,0,0,0,0,21.699999999999999,0,0,8.6999999999999993,8.5999999999999996,0,0,0,0,8.8000000000000007,0,181.80000000000001,0,0,0,0,0,0,1,0,0,0.40000000000000002,0,0,0,0,0,0,0,0.40000000000000002,0,0,0,0,0,0,20.600000000000001,3.2999999999999998,0,0.59999999999999998,0.59999999999999998,0,0,0,0.10000000000000001,5.0999999999999996,53.5,7.7000000000000002,0,0,10.699999999999999,3.7999999999999998,0,21.100000000000001,0,0,64.400000000000006,9.1999999999999993,0,0,1.3,0,0,0.10000000000000001,33.399999999999999,1.3,0,18.699999999999999,0,0,0,0,0,0,3.2999999999999998,0,3.8999999999999999,11.5,12.6,0,4.7000000000000002,8.0999999999999996,0,8.1999999999999993,0,0,0,43.200000000000003,1,19.199999999999999,0.59999999999999998,1.8,40,10.6,15.800000000000001,2.6000000000000001,1.3999999999999999,0,0,0,0,1,9.5999999999999996,0,0,0,0,0,0.20000000000000001,0,10.4,0,0,0,0,0,9.1999999999999993,0,0,0,0,24.399999999999999,0,0,0,0,4.5999999999999996,23.199999999999999,0,3.7999999999999998,0,8.5999999999999996,15.6,0,18.199999999999999,0,0,0.20000000000000001,0.80000000000000004,3.6000000000000001,0,0,1.8,0,0],"text":["as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   6.4<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   2.8<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   3.7<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):  18.7<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):  21.7<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   8.7<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   8.6<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   8.8<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm): 181.8<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   1.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.4<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.4<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):  20.6<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   3.3<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.6<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.6<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.1<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   5.1<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):  53.5<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   7.7<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):  10.7<br />Month: August","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   3.8<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):  21.1<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):  64.4<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   9.2<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   1.3<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.1<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):  33.4<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   1.3<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):  18.7<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   3.3<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   3.9<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):  11.5<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):  12.6<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   4.7<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   8.1<br />Month: August","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   8.2<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):  43.2<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   1.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):  19.2<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.6<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   1.8<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):  40.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):  10.6<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):  15.8<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   2.6<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   1.4<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   1.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   9.6<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.2<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):  10.4<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   9.2<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):  24.4<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   4.6<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):  23.2<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   3.8<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   8.6<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):  15.6<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):  18.2<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.2<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.8<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   3.6<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   1.8<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: August"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(255,0,0,1)","opacity":0.59999999999999998,"size":7.559055118110237,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(255,0,0,1)"}},"hoveron":"points","name":"August","legendgroup":"August","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.89256936646997931,0.85479930760338907,0.91381183490157125,0.95512865241616962,1.0934852988459169,0.97235734099522231,1.0291680264286698,0.93444439414888625,1.1545589388348163,1.0429195466451346,0.89868748849257829,0.80017368635162711,1.0982102867215873,1.0116030157543718,1.1349423967301846,0.84569553649052975,0.84027741504833098,1.1574296532198787,0.95478524304926393,1.1875784129835665,1.0987192814238369,1.1434515691362321,0.88585339589044454,0.89520975211635234,1.0672214036807417,1.1563626362942159,1.0589545541442931,0.81093292385339732,0.86859201826155186,0.90071199554949999,0.98328388584777715,1.8055812090635299,1.871869129035622,1.9073782157152892,2.1500429564155636,2.1414027351886036,1.9425221404992044,2.1714990898035467,1.8725652451626957,1.9429250068031252,1.9990405014716088,2.1211372355930509,1.9307990796864032,1.8651650875806809,2.1276014224626123,1.8270277179777623,1.8706585260108113,1.8390164203941821,2.0528757694177329,1.8381204078905284,2.1615898366086186,1.9884290006011724,1.8939462854526936,1.947847970481962,1.9637628428637981,1.8777046850882471,2.1198890306986868,1.8616141145117582,1.8111819498240949,1.9596863880753517,1.8420640693046153,2.0466535336337985,2.9853114509023726,2.8208978541195391,3.0329367512837053,3.0461620162241161,3.1718592064455153,3.0137162973172962,2.9281579962931574,2.9892065378837289,3.0825492386706173,2.9256804854609073,3.0497947984375058,3.1963791768066585,2.8191362733021377,3.01104464167729,2.9684313188306986,3.0116131871007381,3.1170774298720061,2.9235155179165302,3.140495770983398,3.11391587452963,2.8133194279856979,2.8175008567981421,2.9326403968036177,2.8357199907302855,2.9326578548178075,2.8339886819943785,3.1143154007382692,2.9563738378696143,3.1137843583710492,3.0803509483113887,3.0854686128906907,3.8097074875608086,4.1933525611646472,4.0336915045976642,4.109003267809749,4.1475072944536802,3.8749281538650395,3.9703448596410453,4.1042391614057125,4.1098732442595063,3.9493314998224376,4.0395580526441339,4.1444011337123809,3.9969655769877135,4.0151516648940744,3.8701727648265658,3.9210991168394687,4.156888184230775,4.0638171195052566,3.8651949117891489,3.932490021176636,4.06668128175661,4.1003330701962115,4.0875961817800999,3.9582892019301652,3.9499597213231028,3.8600167201831939,4.0560249391011896,3.8058528110384939,4.1772066980600355,4.0185570092871785,4.1857589990831912,5.1139883271418514,5.0202523353509605,5.0361274700611833,5.1035524424165484,5.0302619135938587,4.8691264085471628,5.0545750249177219,5.0409751197323205,5.0822508233599368,4.8590901025570927,4.8453990426845852,5.170728265494108,5.1452365881763402,4.8473397184163334,4.8110245849005882,5.0346936285495758,4.9965543503873047,4.9918412621133026,4.9537702217698101,5.155610014218837,4.8529243775643405,5.1687870109453797,5.191562119312584,5.0923522728495296,5.0412521190941337,5.0002164401113989,4.9147382862865925,5.0047198378480973,4.8002935317344964,5.1767329996451732,4.8207725633867087],"y":[2.7999999999999998,1.7,5,8.1999999999999993,0,0,0,19.800000000000001,48.100000000000001,21.100000000000001,0.59999999999999998,0,0,0,12.699999999999999,0.10000000000000001,1.8999999999999999,23.5,0.5,0,0,0,0,12.199999999999999,164.40000000000001,42.200000000000003,5.7999999999999998,0,0,0,0,6,7.9000000000000004,2.7999999999999998,22.199999999999999,3.5,25.800000000000001,0,67.599999999999994,0.10000000000000001,8.6999999999999993,0,30.800000000000001,27.800000000000001,1.3999999999999999,3.1000000000000001,0,0,2.2999999999999998,0,5.5,0,1.5,54.700000000000003,30.5,4.5999999999999996,0,0,0,1.7,0,0,18.600000000000001,0.5,0,1.3999999999999999,0,0,5.2000000000000002,0.29999999999999999,40.5,11.300000000000001,0,14.6,2.3999999999999999,4.9000000000000004,0,32.399999999999999,1,15.800000000000001,3.1000000000000001,92.099999999999994,23.300000000000001,0,0,0,0,0,0,5.5,0,0,0.10000000000000001,25.600000000000001,11.800000000000001,119.8,0.40000000000000002,0.40000000000000002,7.4000000000000004,0,37.799999999999997,0,0.80000000000000004,0,2.7999999999999998,0,19,14.4,0,0,75,0.20000000000000001,11.199999999999999,0,1.2,2.3999999999999999,0.59999999999999998,0,1.3999999999999999,0,0.20000000000000001,0,2.3999999999999999,13.4,17.399999999999999,0.80000000000000004,3.7999999999999998,0,2,4.2000000000000002,1.2,0,5.7999999999999998,0,10,3,0,57.600000000000001,0.40000000000000002,0,0,0,0.40000000000000002,2.3999999999999999,7.5999999999999996,8.4000000000000004,4.4000000000000004,0,22.600000000000001,7.5999999999999996,22.199999999999999,32.399999999999999,8.4000000000000004,0.20000000000000001,33.399999999999999],"text":["as.factor(Year): 1983<br />Daily Rainfall Total (mm):   2.8<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   1.7<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   5.0<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   8.2<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):  19.8<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):  48.1<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):  21.1<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.6<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):  12.7<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.1<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   1.9<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):  23.5<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.5<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):  12.2<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm): 164.4<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):  42.2<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   5.8<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1983<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   6.0<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   7.9<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   2.8<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):  22.2<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   3.5<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):  25.8<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):  67.6<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.1<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   8.7<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):  30.8<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):  27.8<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   1.4<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   3.1<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   2.3<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   5.5<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   1.5<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):  54.7<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):  30.5<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   4.6<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   1.7<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 1993<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):  18.6<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.5<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   1.4<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   5.2<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.3<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):  40.5<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):  11.3<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):  14.6<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   2.4<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   4.9<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):  32.4<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   1.0<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):  15.8<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   3.1<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):  92.1<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):  23.3<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   5.5<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2003<br />Daily Rainfall Total (mm):   0.1<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):  25.6<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):  11.8<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm): 119.8<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.4<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.4<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   7.4<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):  37.8<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.8<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   2.8<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):  19.0<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):  14.4<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):  75.0<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.2<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):  11.2<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   1.2<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   2.4<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.6<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   1.4<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.2<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):   2.4<br />Month: December","as.factor(Year): 2013<br />Daily Rainfall Total (mm):  13.4<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):  17.4<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.8<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   3.8<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   2.0<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   4.2<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   1.2<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   5.8<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):  10.0<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   3.0<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):  57.6<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.4<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.4<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   2.4<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   7.6<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   8.4<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   4.4<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.0<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):  22.6<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   7.6<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):  22.2<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):  32.4<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   8.4<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):   0.2<br />Month: December","as.factor(Year): 2023<br />Daily Rainfall Total (mm):  33.4<br />Month: December"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,255,1)","opacity":0.59999999999999998,"size":7.559055118110237,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(0,0,255,1)"}},"hoveron":"points","name":"December","legendgroup":"December","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5],"y":[8.4580645161290331,3.4451612903225808,6.2451612903225806,5.3419354838709676,3.6774193548387095],"text":["as.factor(Year): 1983<br />Mean:  8.458065<br />Month: August","as.factor(Year): 1993<br />Mean:  3.445161<br />Month: August","as.factor(Year): 2003<br />Mean:  6.245161<br />Month: August","as.factor(Year): 2013<br />Mean:  5.341935<br />Month: August","as.factor(Year): 2023<br />Mean:  3.677419<br />Month: August"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(255,0,0,1)","opacity":1,"size":11.338582677165356,"symbol":"diamond","line":{"width":1.8897637795275593,"color":"rgba(255,0,0,1)"}},"hoveron":"points","name":"August","legendgroup":"August","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5],"y":[11.95483870967742,9.9516129032258061,8.806451612903226,11.232258064516129,8.2645161290322573],"text":["as.factor(Year): 1983<br />Mean: 11.954839<br />Month: December","as.factor(Year): 1993<br />Mean:  9.951613<br />Month: December","as.factor(Year): 2003<br />Mean:  8.806452<br />Month: December","as.factor(Year): 2013<br />Mean: 11.232258<br />Month: December","as.factor(Year): 2023<br />Mean:  8.264516<br />Month: December"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,255,1)","opacity":1,"size":11.338582677165356,"symbol":"diamond","line":{"width":1.8897637795275593,"color":"rgba(0,0,255,1)"}},"hoveron":"points","name":"December","legendgroup":"December","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5],"y":[8.4580645161290331,3.4451612903225808,6.2451612903225806,5.3419354838709676,3.6774193548387095],"text":["as.factor(Year): 1983<br />Mean:  8.458065<br />Month: August<br />Month: August","as.factor(Year): 1993<br />Mean:  3.445161<br />Month: August<br />Month: August","as.factor(Year): 2003<br />Mean:  6.245161<br />Month: August<br />Month: August","as.factor(Year): 2013<br />Mean:  5.341935<br />Month: August<br />Month: August","as.factor(Year): 2023<br />Mean:  3.677419<br />Month: August<br />Month: August"],"type":"scatter","mode":"lines","line":{"width":1.1338582677165354,"color":"rgba(255,0,0,1)","dash":"dot"},"hoveron":"points","name":"August","legendgroup":"August","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5],"y":[11.95483870967742,9.9516129032258061,8.806451612903226,11.232258064516129,8.2645161290322573],"text":["as.factor(Year): 1983<br />Mean: 11.954839<br />Month: December<br />Month: December","as.factor(Year): 1993<br />Mean:  9.951613<br />Month: December<br />Month: December","as.factor(Year): 2003<br />Mean:  8.806452<br />Month: December<br />Month: December","as.factor(Year): 2013<br />Mean: 11.232258<br />Month: December<br />Month: December","as.factor(Year): 2023<br />Mean:  8.264516<br />Month: December<br />Month: December"],"type":"scatter","mode":"lines","line":{"width":1.1338582677165354,"color":"rgba(0,0,255,1)","dash":"dot"},"hoveron":"points","name":"December","legendgroup":"December","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.762557077625573,"r":7.3059360730593621,"b":40.182648401826491,"l":43.105022831050235},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"Changi: Daily Rainfall (1983-2023)","font":{"color":"rgba(0,0,0,1)","family":"","size":17.534246575342465},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,5.5999999999999996],"tickmode":"array","ticktext":["1983","1993","2003","2013","2023"],"tickvals":[1,2,3,4,5],"categoryorder":"array","categoryarray":["1983","1993","2003","2013","2023"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Year","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-9.0900000000000016,190.89000000000001],"tickmode":"array","ticktext":["0","25","50","75","100","125","150","175"],"tickvals":[0,25,50,75,99.999999999999986,125,150,175],"categoryorder":"array","categoryarray":["0","25","50","75","100","125","150","175"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Daily Rainfall Total (mm)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"Month","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"76385129a24":{"x":{},"y":{},"colour":{},"type":"scatter"},"763845fd4f43":{"x":{},"y":{},"colour":{}},"76386971739b":{"x":{},"y":{},"colour":{}}},"cur_data":"76385129a24","visdat":{"76385129a24":["function (y) ","x"],"763845fd4f43":["function (y) ","x"],"76386971739b":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Insight
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>From the scatter plot, two primary insights can be drawn regarding rainfall patterns for August and December. First, the mean rainfall in December appears to be higher than in August, indicated by the average position of December’s data points being higher on the y-axis. Second, when observing rainfall events exceeding 25mm, the majority are represented by December’s data points, suggesting that heavy rainfall is more prevalent in December than in August. Overall, the data suggests that <strong>December experiences a greater quantity of rainfall compared to August</strong>.</p>
+<p>We also noticed that most of the value is distributed around 0, which is slightly ambiguous. We can calculate the number of rain days to see the difference between dry and wet months.</p>
+</div>
+</div>
+</section>
+<section id="further-insight-about-the-rainy-days" class="level3">
+<h3 class="anchored" data-anchor-id="further-insight-about-the-rainy-days">4.2 Further insight about the rainy days</h3>
+<p>We can derive the number of rainy day to see if the discrepancy is larger by year.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of rainy days per year for each month</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Rainfall_Days <span class="ot">&lt;-</span> combined_data <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year, Month) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Rainy_Days =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Daily Rainfall Total (mm)</span><span class="st">`</span> <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a ggplot object with lines and points for each month</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>ggplot_object <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Rainfall_Days, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Rainy_Days, <span class="at">group =</span> Month, <span class="at">color =</span> Month)) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"August"</span> <span class="ot">=</span> <span class="st">"pink"</span>, <span class="st">"December"</span> <span class="ot">=</span> <span class="st">"lightblue"</span>)) <span class="sc">+</span> <span class="co"># Set the line colors manually</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The Discrepancy Of Rainydays Trends by year"</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Rainy Days"</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Month"</span>) <span class="sc">+</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="co"># Change to "bottom" to show the legend</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the ggplot object to a plotly object for interactivity</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>plotly_object <span class="ot">&lt;-</span> <span class="fu">ggplotly</span>(ggplot_object, <span class="at">tooltip =</span> <span class="fu">c</span>(<span class="st">"y"</span>, <span class="st">"color"</span>)) <span class="co"># Specify which data to show in the tooltip</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the interactive plot</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>plotly_object</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-4efdb08bae6d3ecc0b25" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-4efdb08bae6d3ecc0b25">{"x":{"data":[{"x":[1983,1993,2003,2013,2023],"y":[10,12,14,15,12],"text":["Rainy_Days: 10<br />Month: August","Rainy_Days: 12<br />Month: August","Rainy_Days: 14<br />Month: August","Rainy_Days: 15<br />Month: August","Rainy_Days: 12<br />Month: August"],"type":"scatter","mode":"lines+markers","line":{"width":1.8897637795275593,"color":"rgba(255,192,203,1)","dash":"solid"},"hoveron":"points","name":"August","legendgroup":"August","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","marker":{"autocolorscale":false,"color":"rgba(255,192,203,1)","opacity":1,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(255,192,203,1)"}},"frame":null},{"x":[1983,1993,2003,2013,2023],"y":[17,20,18,21,23],"text":["Rainy_Days: 17<br />Month: December","Rainy_Days: 20<br />Month: December","Rainy_Days: 18<br />Month: December","Rainy_Days: 21<br />Month: December","Rainy_Days: 23<br />Month: December"],"type":"scatter","mode":"lines+markers","line":{"width":1.8897637795275593,"color":"rgba(173,216,230,1)","dash":"solid"},"hoveron":"points","name":"December","legendgroup":"December","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","marker":{"autocolorscale":false,"color":"rgba(173,216,230,1)","opacity":1,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(173,216,230,1)"}},"frame":null}],"layout":{"margin":{"t":43.762557077625573,"r":7.3059360730593621,"b":40.182648401826491,"l":37.260273972602747},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"The Discrepancy Of Rainydays Trends by year","font":{"color":"rgba(0,0,0,1)","family":"","size":17.534246575342465},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[1981,2025],"tickmode":"array","ticktext":["1990","2000","2010","2020"],"tickvals":[1990,2000,2010,2020],"categoryorder":"array","categoryarray":["1990","2000","2010","2020"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Year","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[9.3499999999999996,23.649999999999999],"tickmode":"array","ticktext":["12","16","20"],"tickvals":[12,16,20],"categoryorder":"array","categoryarray":["12","16","20"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Rainy Days","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"Month","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"76382aa57f34":{"x":{},"y":{},"colour":{},"type":"scatter"},"76385aa64ca1":{"x":{},"y":{},"colour":{}}},"cur_data":"76382aa57f34","visdat":{"76382aa57f34":["function (y) ","x"],"76385aa64ca1":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Insight
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>From the above plot, we can see that the difference is getting larger from 2003 to 2023, which indicates that the contrast between the wet month and dry month is likely to be more pronounced. Of course, we need more dataset to validate the insight in the future.</p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
