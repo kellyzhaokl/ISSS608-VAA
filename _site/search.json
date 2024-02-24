@@ -432,5 +432,12 @@
     "title": "Take-home_Ex02",
     "section": "3 Learning Point",
     "text": "3 Learning Point\nBy reviewing my classmates’ work, I’ve learned the importance of variety in data visualization.\nFor instance, I’ve observed that complex numerical data can become more accessible when first categorized and then depicted using an appropriate plot type. This step of classification allows for a cleaner and more organized presentation, making it easier for the audience to digest the information.\nFurthermore, I’ve realized that the impact of a visualization is often in the details. The same chart can be transformed from a simple illustration to a compelling narrative with the strategic use of colors, adjusted titles, and the inclusion of helpful annotations like auxiliary lines. These seemingly minor tweaks can significantly enhance the visualization’s ability to engage and inform."
+  },
+  {
+    "objectID": "In-class_Ex/In-class_Ex06/In-class_Ex06.html",
+    "href": "In-class_Ex/In-class_Ex06/In-class_Ex06.html",
+    "title": "Horizon Plot",
+    "section": "",
+    "text": "Code\npacman::p_load(ggHoriPlot, ggthemes, tidyverse)\n\n\n\n\nCode\naverp &lt;- read_csv(\"data/AVERP.csv\") %&gt;%\n  mutate(`Date` = dmy(`Date`))\n\n\n\n\nCode\n# fig-width: 12\n# fig-height: 10\naverp %&gt;% \n  filter(Date &gt;= \"2018-01-01\") %&gt;%\n  ggplot() +\n  geom_horizon(aes(x = Date, y=Values), \n               origin = \"midpoint\", \n               horizonscale = 6)+\n  facet_grid(`Consumer Items`~.) +\n    theme_few() +\n  scale_fill_hcl(palette = 'RdBu') +\n  theme(panel.spacing.y=unit(0, \"lines\"), strip.text.y = element_text(\n    size = 5, angle = 0, hjust = 0),\n    legend.position = 'none',\n    axis.text.y = element_blank(),\n    axis.text.x = element_text(size=7),\n    axis.title.y = element_blank(),\n    axis.title.x = element_blank(),\n    axis.ticks.y = element_blank(),\n    panel.border = element_blank()\n    ) +\n    scale_x_date(expand=c(0,0), date_breaks = \"3 month\", date_labels = \"%b%y\") +\n  ggtitle('Average Retail Prices of Selected Consumer Items (Jan 2018 to Dec 2022)')"
   }
 ]
