@@ -1,0 +1,145 @@
+---
+title: "Hands-on Exercise 8"
+date: "March 4, 2024"
+date-modified: "last-modified"
+execute: 
+  eval: true
+  echo: true
+  warning: false
+editor: visual
+fig_width: 15
+fig_height: 10
+---
+
+# `Modelling, Visualising and Analysing Network Data with R`
+
+## **1 Getting Started**
+
+### **1.1 Installing and loading the packages**
+
+```{r}
+pacman::p_load(igraph, tidygraph, ggraph, 
+               visNetwork, lubridate, clock,
+               tidyverse, graphlayouts)
+```
+
+### **1.2 Importing Data into R**
+
+```{r}
+GAStech_nodes <- read_csv("data/GAStech_email_node.csv")
+GAStech_edges <- read_csv("data/GAStech_email_edge-v2.csv")
+```
+
+Examine the structure of the data frame using *glimpse()* of **dplyr**.
+
+```{r}
+glimpse(GAStech_edges)
+```
+
+The code chunk below will be used to perform the changes.
+
+```{r}
+GAStech_edges <- GAStech_edges %>%
+  mutate(SendDate = dmy(SentDate)) %>%
+  mutate(Weekday = wday(SentDate,
+                        label = TRUE,
+                        abbr = FALSE))
+```
+
+Table below shows the data structure of the reformatted *GAStech_edges* data frame
+
+```{r}
+glimpse(GAStech_edges)
+```
+
+A close examination of *GAStech_edges* data.frame reveals that it consists of individual e-mail flow records. This is not very useful for visualisation.
+
+In view of this, we will aggregate the individual by date, senders, receivers, main subject and day of the week.
+
+The code chunk:
+
+```{r}
+GAStech_edges_aggregated <- GAStech_edges %>%
+  filter(MainSubject == "Work related") %>%
+  group_by(source, target, Weekday) %>%
+    summarise(Weight = n()) %>%
+  filter(source!=target) %>%
+  filter(Weight > 1) %>%
+  ungroup()
+```
+
+```{r}
+glimpse(GAStech_edges_aggregated)
+```
+
+## **2 Creating network objects using tidygraph**
+
+### **2.1 The tbl_graph object**
+
+Two functions of **tidygraph** package can be used to create network objects:
+
+-   [`tbl_graph()`](https://tidygraph.data-imaginist.com/reference/tbl_graph.html) creates a **tbl_graph** network object from nodes and edges data.
+
+-   [`as_tbl_graph()`](https://tidygraph.data-imaginist.com/reference/tbl_graph.html) converts network data and objects to a **tbl_graph** network. Below are network data and objects supported by `as_tbl_graph()`
+
+    -   a node data.frame and an edge data.frame,
+
+    -   data.frame, list, matrix from base,
+
+    -   igraph from igraph,
+
+    -   network from network,
+
+    -   dendrogram and hclust from stats,
+
+    -   Node from data.tree,
+
+    -   phylo and evonet from ape, and
+
+    -   graphNEL, graphAM, graphBAM from graph (in Bioconductor).
+
+### **2.2 The dplyr verbs in tidygraph**
+
+*activate()* verb from **tidygraph** serves as a switch between tibbles for nodes and edges. All dplyr verbs applied to **tbl_graph** object are applied to the active tibble.
+
+### **2.3 Using `tbl_graph()` to build tidygraph data model**
+
+```{r}
+GAStech_graph <- tbl_graph(nodes = GAStech_nodes,
+                           edges = GAStech_edges_aggregated, 
+                           directed = TRUE)
+```
+
+### **2.4 Reviewing the output tidygraph’s graph object**
+
+```{r}
+GAStech_graph
+```
+
+### **2.5 Reviewing the output tidygraph’s graph object**
+
+-   The output above reveals that *GAStech_graph* is a tbl_graph object with 54 nodes and 4541 edges.
+
+-   The command also prints the first six rows of “Node Data” and the first three of “Edge Data”.
+
+-   It states that the Node Data is **active**. The notion of an active tibble within a tbl_graph object makes it possible to manipulate the data in one tibble at a time
+
+### **2.6 Changing the active object**
+
+```{r}
+GAStech_graph %>%
+  activate(edges) %>%
+  arrange(desc(Weight))
+```
+
+## **3 Plotting Static Network Graphs with ggraph package**
+
+### **3.1 Plotting a basic network graph**
+
+The code chunk below uses [*ggraph()*](https://ggraph.data-imaginist.com/reference/ggraph.html), [*geom-edge_link()*](https://ggraph.data-imaginist.com/reference/geom_edge_link.html) and [*geom_node_point()*](https://ggraph.data-imaginist.com/reference/geom_node_point.html) to plot a network graph by using *GAStech_graph*. Before your get started, it is advisable to read their respective reference guide at least once.
+
+```{r}
+ggraph(GAStech_graph) +
+  geom_edge_link() +
+  geom_node_point()
+```
