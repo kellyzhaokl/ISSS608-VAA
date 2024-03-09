@@ -1,6 +1,6 @@
 ---
 title: "Take-home_Ex04"
-date: "March 07, 2024"
+date: "March 10, 2024"
 date-modified: "last-modified"
 execute: 
   eval: true
@@ -11,21 +11,29 @@ editor: visual
 
 ## 1 Overview
 
-## 2 Objective
+Our project is about weather visualization. So in this take-home exercise 4, I will select Rainfall distribution for shiny application and complete the following tasks:
 
-## 3 Data preparation
+-   To evaluate and determine whether the necessary R packages needed for my Shiny application are supported in R CRAN,
 
-### 3.1 Loading R packages
+-   To prepare and test the specific R codes can be run and return the correct output as expected,
+
+-   To determine the parameters and outputs that will be exposed on the Shiny applications, and
+
+-   To select the appropriate Shiny UI components for exposing the parameters determined above.
+
+## 2 Data preparation
+
+### 2.1 Loading R packages
 
 ```{r}
-pacman::p_load(ggplot2,readr,dplyr,lubridate,pheatmap,tmap, tidyverse,sf)
+pacman::p_load(ggplot2,readr,dplyr,lubridate,pheatmap,tmap, tidyverse,sf,viridis,terra,gstat,tmap,tibble)
 ```
 
-### 3.2 Data Preparation
+### 2.2 Data Preparation
 
-1.read data
+Firstly, our team download [historical daily data](http://www.weather.gov.sg/climate-historical-daily/) from [Meteorological Service Singapore](http://www.weather.gov.sg/home/) website using python. The raw dataset is from 2014 to 2024.
 
-2.data caleaning
+Then, we select the dataset from 2014 to 2023 and replace "�" value to na, change the column name which could be more easier to read.
 
 ```{r}
 data <- read_csv("data/weather.csv", na = c("?", "�"))
@@ -65,189 +73,149 @@ print(monthly_rainfall)
 
 ## 4 Visualisation
 
-1.heatmap
+### 4.1 Monthly Rainfall Heatmap By Year
+
+Firstly, I create this heatmap to illustrate the monthly rainfall distribution over a decade, with varying shades of blue representing the amount of rainfall—darker for more rain and lighter for less.
 
 ```{r}
 
-# 首先，确保Year和Month列是因子类型，以便在热图中正确显示
 monthly_rainfall$Year <- factor(monthly_rainfall$Year)
 monthly_rainfall$Month <- factor(monthly_rainfall$Month, 
                                  levels = c(1:12), 
                                  labels = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"))
 
-# 创建热图
 ggplot(monthly_rainfall, aes(x = Month, y = Year, fill = TotalRainfall)) +
-  geom_tile(color = "white") + # 使用geom_tile来创建热图的方块
-  scale_fill_gradient(low = "white", high = "blue") + # 定义颜色渐变范围
-  theme_minimal() + # 使用简约主题
+  geom_tile(color = "white") + 
+  scale_fill_gradient(low = "white", high = "blue") + 
+  theme_minimal() + 
   labs(fill = "Total Rainfall (mm)", 
        title = "Monthly Rainfall Heatmap", 
        x = "Month", 
        y = "Year") + 
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) # 调整X轴文字角度，如果有需要
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
 
 ```
 
-2.map
+### 4.2 Daily Rainfall HeatMap By Month
+
+Analyzing daily rainfall patterns instead could offer a more precise understanding of rainfall trends and extreme weather events, providing valuable insight beyond the broader monthly averages.
 
 ```{r}
-head(data)
+data_2023 <- data %>% 
+  filter(Year == 2023)
+
+rainfall_avg <- data_2023 %>%
+  group_by(Month, Day) %>%
+  summarise(avg_rainfall = mean(DailyRainfall, na.rm = TRUE), .groups = "drop")
+
+ggplot(rainfall_avg, aes(x = factor(Day), y = factor(Month))) +
+  geom_tile(aes(fill = avg_rainfall), color = "white") +
+  scale_fill_viridis(na.value = "white", name = "Avg Rainfall (mm)") +
+  labs(x = "Day", y = "Month") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+### 4.3 Rainfall Distribution In Singapore
+
+Get the rainfall station dataset
+
+```{r}
+rfstations1 <- read.csv("data/aspatial/RainfallStation.csv")
+```
+
+For example, calculate the average rainfall at each station in 2023
+
+```{r}
+rfdata1 <- data_2023 %>%
+  group_by(Station) %>%
+  summarise(AvgRainfall = mean(DailyRainfall, na.rm = TRUE)) %>%
+  ungroup() 
+
+print(rfdata1)
+```
+
+Combining rainfall data with station coordinates data
+
+```{r}
+rfdata1 <- rfdata1 %>%
+  left_join(rfstations1)
+
+rfdata_sf1 <- st_as_sf(rfdata1,
+                      coords = c("Longitude",
+                                 "Latitude"),
+                      crs = 4326) %>%
+  st_transform(crs=3414)
 ```
 
 ```{r}
-pacman::p_load(jsonlite,httr,readxl)
+mpsz2019 <-st_read(dsn = "data/geospatial",layer ="MPSZ-2019") %>%
+  st_transform(CRS =3414)
 ```
 
+Plot the average rainfall data by different stations, but as we can see that there is only station plot in this map. We need to take more steps to predict the entire rainfall distribution across Singapore using the station data.
+
 ```{r}
-# 从API获取站点数据
-response <- GET("https://api.data.gov.sg/v1/environment/rainfall")
-if (status_code(response) != 200) {
-    stop("Failed to fetch data from API")
-}
-
-# 解析站点数据
-api_data <- fromJSON(content(response, "text", encoding = "UTF-8"), flatten = TRUE)
-stations <- api_data$metadata$stations
-
-# 假定stations已经是一个data.frame
-stations_df <- data.frame(
-  StationID = stations$id,
-  StationName = stations$name,
-  Latitude = stations$location.latitude,
-  Longitude = stations$location.longitude,
-  stringsAsFactors = FALSE
-)
+tmap_options(check.and.fix = TRUE)
+tmap_mode("view")
+tm_shape(mpsz2019)+
+  tm_borders()+
+  tm_shape(rfdata_sf1)+
+  tm_dots(col="AvgRainfall")
+tmap_mode("plot")
 ```
 
-```{r}
-# 检查stations结构
-str(stations)
-```
+This method involves using spatial analysis to predict average rainfall across a geographic area, transforming the results into the same coordinate system as the base map, rasterizing the predicted values to create a grid, and finally visualizing the results with a heatmap using the **`tmap`** package in R.
 
 ```{r}
+grid <- terra::rast(mpsz2019, nrows = 690, ncols = 1075)
+xy <- terra::xyFromCell(grid, 1:ncell(grid))
 
-yearly_rainfall_summary <- data %>%
-  group_by(Station, Year) %>%
-  summarise(AverageRainfall = mean(DailyRainfall, na.rm = TRUE), .groups = 'drop')
+sf::sf_use_s2(FALSE)
 
-Station_Records <- read_excel("data/Station_Records.xlsx")
+coop <- st_as_sf(as.data.frame(xy),
+                 coords = c("x","y"),
+                 crs = st_crs(mpsz2019))
 
-# 将年度降雨总结数据与站点记录合并
-final_data <- merge(yearly_rainfall_summary, Station_Records, by = "Station", all = TRUE)
-
-# 显示合并后的数据头部
-head(final_data)
+coop <- st_filter(coop,mpsz2019)
 
 ```
 
 ```{r}
-pacman::p_load(spatstat,gstat,sf,deldir,sp,terra,raster)
+res <- gstat(formula = AvgRainfall ~ 1,
+             locations = rfdata_sf1,
+             nmax = 15,
+             set = list(idp = 0))
+
+rfdata_sf_crs1 <- st_crs(rfdata_sf1)
+
+print(rfdata_sf_crs1)
+
+coop <- st_transform(coop, crs = rfdata_sf_crs1)
 ```
 
 ```{r}
-
-# 过滤出2023年的数据
-final_data_2023 <- final_data[final_data$Year == 2023, ]
-
-# Step 1: Convert your final_data to an sf object
-final_sf <- st_as_sf(final_data_2023, coords = c("Longitude", "Latitude"), crs = 4326)
-
-# Assuming final_data is prepared with 'Longitude' and 'Latitude'
-voronoi <- deldir(final_data_2023$Longitude, final_data_2023$Latitude)
-
-# Extract the tiles and convert them into polygons
-v.polygons <- tile.list(voronoi)
-thiessen_polygons <- lapply(seq_along(v.polygons), function(i) {
-  tile <- v.polygons[[i]]
-  # Convert the tile coordinates to a matrix
-  coords <- matrix(c(tile$x, tile$y), ncol = 2, byrow = TRUE)
-  # Create a Polygon object
-  Polygon(coords)
-})
-
-# Combine all Polygons into a SpatialPolygons object
-thiessen_sp <- SpatialPolygons(lapply(seq(thiessen_polygons), function(i) {
-  Polygons(list(thiessen_polygons[[i]]), ID = as.character(i))
-}))
-
-# Convert SpatialPolygons object to sf object
-thiessen_sf <- st_as_sf(thiessen_sp, crs = st_crs(final_sf))
+resp <- predict(res,coop)
 ```
 
+Rainfall Distribution In Singapore
+
 ```{r}
-#read file
-mpsz <- st_read(dsn = "data/geospatial", 
-                layer = "MP14_SUBZONE_WEB_PL")
+
+resp <- st_transform(resp, crs = terra::crs(grid))
+
+resp$x <- st_coordinates(resp)[,1]
+resp$y <- st_coordinates(resp)[,2]
+resp$pred <- resp$var1.pred
+
+pred <- terra::rasterize(resp, grid, field = "pred", fun = 'mean')
+
+print(terra::values(pred))
+
+tmap_options(check.and.fix = TRUE)
+tmap_mode("plot")
+tm_shape(pred) +
+  tm_raster(alpha = 0.6, palette = "viridis", n = 6) 
 ```
 
 ## 5 Shiny Storyboard
-
-```{r}
-# Assuming final_data is already loaded and filtered for the year 2023
-# Transform final_sf to the same projection as mpsz (SVY21)
-final_sf <- st_transform(final_sf, crs = st_crs(mpsz))
-
-# Since your mpsz data is already read, we will directly proceed with the spatial join
-# Join the rainfall data to the subzone polygons based on their location
-mpsz_with_rainfall <- st_join(mpsz, final_sf, join = st_intersects)
-
-# You may want to handle NA values or aggregation if necessary here
-
-# Set tmap mode to interactive viewing
-tmap_mode("view")
-
-# Create an interactive map
-tm <- tm_shape(mpsz_with_rainfall) + 
-  tm_polygons(col = "AverageRainfall", palette = "RdBu",
-              title = "Average Rainfall in 2023 (mm)") +
-  tm_borders() +
-  tm_legend(outside = TRUE) +
-  tm_tiles("CartoDB.Positron") # Background tile layer
-
-# Convert to leaflet object for further customization or display
-leaflet_map <- tmap_leaflet(tm)
-
-# Print the leaflet map to view the interactive version
-leaflet_map
-```
-
-```{r}
-tm_shape(mpsz) + tm_polygons() +
-  tm_shape(final_sf) +
-  tm_dots(col="AverageRainfall", palette = "RdBu", auto.palette.mapping = FALSE,
-             title="Sampled precipitation \n(in inches)", size=0.7) +
-  tm_text("AverageRainfall", just="left", xmod=.5, size = 0.7) +
-  tm_legend(legend.outside=TRUE)
-```
-
-```{r}
-
-# Create a tessellated surface
-th  <- dirichlet(as.ppp(final_sf)) |> st_as_sfc() |> st_as_sf()
-
-# The dirichlet function does not carry over projection information
-# requiring that this information be added manually
-st_crs(th) <- st_crs(final_sf)
-
-# The tessellated surface does not store attribute information
-# from the point data layer. We'll join the point attributes to the polygons
-th2     <- st_join(th, final_sf, fn=mean)
-
-# Finally, we'll clip the tessellated  surface to the Texas boundaries
-th.clp   <- st_intersection(th2, mpsz)
-```
-
-```{r}
-tm_map <- tm_shape(th.clp) +
-  tm_polygons(col = "AverageRainfall", palette = "RdBu",
-              title = "Predicted precipitation (in inches)") +
-  tm_shape(final_sf) +
-  tm_bubbles(size = "AverageRainfall", col = "white", border.col = "gray", 
-             alpha = 0.2, border.alpha = 0.3, border.lwd = 0.1, 
-             popup.vars = c(Station = "Station", AverageRainfall = "AverageRainfall")) +
-  tm_legend(legend.outside = TRUE)
-
-# View the map
-tmap_mode("view")
-tm_map
-```
