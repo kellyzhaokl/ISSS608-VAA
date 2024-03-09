@@ -1,0 +1,253 @@
+---
+title: "Take-home_Ex04"
+date: "March 07, 2024"
+date-modified: "last-modified"
+execute: 
+  eval: true
+  echo: true
+  warning: false
+editor: visual
+---
+
+## 1 Overview
+
+## 2 Objective
+
+## 3 Data preparation
+
+### 3.1 Loading R packages
+
+```{r}
+pacman::p_load(ggplot2,readr,dplyr,lubridate,pheatmap,tmap, tidyverse,sf)
+```
+
+### 3.2 Data Preparation
+
+1.read data
+
+2.data caleaning
+
+```{r}
+data <- read_csv("data/weather.csv", na = c("?", "�"))
+
+data <- data %>%
+  dplyr::filter(Year >= 2014, Year <= 2023)
+
+colnames(data) <- c(
+  'Station', 'Year', 'Month', 'Day', 'DailyRainfall',
+  'Highest30minRainfall', 'Highest60minRainfall', 'Highest120minRainfall',
+  'MeanTemperature', 'MaxTemperature', 'MinTemperature',
+  'MeanWindSpeed', 'MaxWindSpeed'
+)
+
+data <- data %>%
+  mutate(
+    DailyRainfall = as.numeric(DailyRainfall),
+    Highest30minRainfall = as.numeric(Highest30minRainfall),
+    Highest60minRainfall = as.numeric(Highest60minRainfall),
+    Highest120minRainfall = as.numeric(Highest120minRainfall),
+    MeanTemperature = as.numeric(MeanTemperature),
+    MaxTemperature = as.numeric(MaxTemperature),
+    MinTemperature = as.numeric(MinTemperature)
+  ) %>%
+  
+  suppressWarnings()
+
+sum(is.na(data$DailyRainfall))
+
+monthly_rainfall <- data %>%
+  group_by(Year, Month) %>%
+  summarise(TotalRainfall = sum(DailyRainfall, na.rm = TRUE))
+
+print(monthly_rainfall)
+
+```
+
+## 4 Visualisation
+
+1.heatmap
+
+```{r}
+
+# 首先，确保Year和Month列是因子类型，以便在热图中正确显示
+monthly_rainfall$Year <- factor(monthly_rainfall$Year)
+monthly_rainfall$Month <- factor(monthly_rainfall$Month, 
+                                 levels = c(1:12), 
+                                 labels = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"))
+
+# 创建热图
+ggplot(monthly_rainfall, aes(x = Month, y = Year, fill = TotalRainfall)) +
+  geom_tile(color = "white") + # 使用geom_tile来创建热图的方块
+  scale_fill_gradient(low = "white", high = "blue") + # 定义颜色渐变范围
+  theme_minimal() + # 使用简约主题
+  labs(fill = "Total Rainfall (mm)", 
+       title = "Monthly Rainfall Heatmap", 
+       x = "Month", 
+       y = "Year") + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) # 调整X轴文字角度，如果有需要
+
+```
+
+2.map
+
+```{r}
+head(data)
+```
+
+```{r}
+pacman::p_load(jsonlite,httr,readxl)
+```
+
+```{r}
+# 从API获取站点数据
+response <- GET("https://api.data.gov.sg/v1/environment/rainfall")
+if (status_code(response) != 200) {
+    stop("Failed to fetch data from API")
+}
+
+# 解析站点数据
+api_data <- fromJSON(content(response, "text", encoding = "UTF-8"), flatten = TRUE)
+stations <- api_data$metadata$stations
+
+# 假定stations已经是一个data.frame
+stations_df <- data.frame(
+  StationID = stations$id,
+  StationName = stations$name,
+  Latitude = stations$location.latitude,
+  Longitude = stations$location.longitude,
+  stringsAsFactors = FALSE
+)
+```
+
+```{r}
+# 检查stations结构
+str(stations)
+```
+
+```{r}
+
+yearly_rainfall_summary <- data %>%
+  group_by(Station, Year) %>%
+  summarise(AverageRainfall = mean(DailyRainfall, na.rm = TRUE), .groups = 'drop')
+
+Station_Records <- read_excel("data/Station_Records.xlsx")
+
+# 将年度降雨总结数据与站点记录合并
+final_data <- merge(yearly_rainfall_summary, Station_Records, by = "Station", all = TRUE)
+
+# 显示合并后的数据头部
+head(final_data)
+
+```
+
+```{r}
+pacman::p_load(spatstat,gstat,sf,deldir,sp,terra,raster)
+```
+
+```{r}
+
+# 过滤出2023年的数据
+final_data_2023 <- final_data[final_data$Year == 2023, ]
+
+# Step 1: Convert your final_data to an sf object
+final_sf <- st_as_sf(final_data_2023, coords = c("Longitude", "Latitude"), crs = 4326)
+
+# Assuming final_data is prepared with 'Longitude' and 'Latitude'
+voronoi <- deldir(final_data_2023$Longitude, final_data_2023$Latitude)
+
+# Extract the tiles and convert them into polygons
+v.polygons <- tile.list(voronoi)
+thiessen_polygons <- lapply(seq_along(v.polygons), function(i) {
+  tile <- v.polygons[[i]]
+  # Convert the tile coordinates to a matrix
+  coords <- matrix(c(tile$x, tile$y), ncol = 2, byrow = TRUE)
+  # Create a Polygon object
+  Polygon(coords)
+})
+
+# Combine all Polygons into a SpatialPolygons object
+thiessen_sp <- SpatialPolygons(lapply(seq(thiessen_polygons), function(i) {
+  Polygons(list(thiessen_polygons[[i]]), ID = as.character(i))
+}))
+
+# Convert SpatialPolygons object to sf object
+thiessen_sf <- st_as_sf(thiessen_sp, crs = st_crs(final_sf))
+```
+
+```{r}
+#read file
+mpsz <- st_read(dsn = "data/geospatial", 
+                layer = "MP14_SUBZONE_WEB_PL")
+```
+
+## 5 Shiny Storyboard
+
+```{r}
+# Assuming final_data is already loaded and filtered for the year 2023
+# Transform final_sf to the same projection as mpsz (SVY21)
+final_sf <- st_transform(final_sf, crs = st_crs(mpsz))
+
+# Since your mpsz data is already read, we will directly proceed with the spatial join
+# Join the rainfall data to the subzone polygons based on their location
+mpsz_with_rainfall <- st_join(mpsz, final_sf, join = st_intersects)
+
+# You may want to handle NA values or aggregation if necessary here
+
+# Set tmap mode to interactive viewing
+tmap_mode("view")
+
+# Create an interactive map
+tm <- tm_shape(mpsz_with_rainfall) + 
+  tm_polygons(col = "AverageRainfall", palette = "RdBu",
+              title = "Average Rainfall in 2023 (mm)") +
+  tm_borders() +
+  tm_legend(outside = TRUE) +
+  tm_tiles("CartoDB.Positron") # Background tile layer
+
+# Convert to leaflet object for further customization or display
+leaflet_map <- tmap_leaflet(tm)
+
+# Print the leaflet map to view the interactive version
+leaflet_map
+```
+
+```{r}
+tm_shape(mpsz) + tm_polygons() +
+  tm_shape(final_sf) +
+  tm_dots(col="AverageRainfall", palette = "RdBu", auto.palette.mapping = FALSE,
+             title="Sampled precipitation \n(in inches)", size=0.7) +
+  tm_text("AverageRainfall", just="left", xmod=.5, size = 0.7) +
+  tm_legend(legend.outside=TRUE)
+```
+
+```{r}
+
+# Create a tessellated surface
+th  <- dirichlet(as.ppp(final_sf)) |> st_as_sfc() |> st_as_sf()
+
+# The dirichlet function does not carry over projection information
+# requiring that this information be added manually
+st_crs(th) <- st_crs(final_sf)
+
+# The tessellated surface does not store attribute information
+# from the point data layer. We'll join the point attributes to the polygons
+th2     <- st_join(th, final_sf, fn=mean)
+
+# Finally, we'll clip the tessellated  surface to the Texas boundaries
+th.clp   <- st_intersection(th2, mpsz)
+```
+
+```{r}
+tm_map <- tm_shape(th.clp) +
+  tm_polygons(col = "AverageRainfall", palette = "RdBu",
+              title = "Predicted precipitation (in inches)") +
+  tm_shape(final_sf) +
+  tm_bubbles(size = "AverageRainfall", col = "white", border.col = "gray", 
+             alpha = 0.2, border.alpha = 0.3, border.lwd = 0.1, 
+             popup.vars = c(Station = "Station", AverageRainfall = "AverageRainfall")) +
+  tm_legend(legend.outside = TRUE)
+
+# View the map
+tmap_mode("view")
+tm_map
+```
