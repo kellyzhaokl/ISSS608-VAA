@@ -104,14 +104,10 @@ Analyzing daily rainfall patterns instead could offer a more precise understandi
 data_2023 <- data %>% 
   filter(Year == 2023)
 
-rainfall_avg <- data_2023 %>%
-  group_by(Month, Day) %>%
-  summarise(avg_rainfall = mean(DailyRainfall, na.rm = TRUE), .groups = "drop")
-
-ggplot(rainfall_avg, aes(x = factor(Day), y = factor(Month))) +
-  geom_tile(aes(fill = avg_rainfall), color = "white") +
-  scale_fill_viridis(na.value = "white", name = "Avg Rainfall (mm)") +
-  labs(x = "Day", y = "Month") +
+ggplot(data_2023, aes(x = factor(Day), y = factor(Month))) +
+  geom_tile(aes(fill = DailyRainfall), color = "white") +
+  scale_fill_viridis(na.value = "white", name = "Daily Rainfall (mm)") +
+  labs(x = "Day", y = "Month", title = "Daily Rainfall by Month and Day") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
@@ -210,7 +206,7 @@ resp$pred <- resp$var1.pred
 
 pred <- terra::rasterize(resp, grid, field = "pred", fun = 'mean')
 
-print(terra::values(pred))
+#print(terra::values(pred))
 
 tmap_options(check.and.fix = TRUE)
 tmap_mode("plot")
@@ -219,3 +215,9 @@ tm_shape(pred) +
 ```
 
 ## 5 Shiny Storyboard
+
+The storyboard prototype is shown like this:
+
+When selecting year, we could see the rainfall distribution across Singapore and the daily rainfall distribution every year.
+
+![](images/clipboard-2171587909.png)

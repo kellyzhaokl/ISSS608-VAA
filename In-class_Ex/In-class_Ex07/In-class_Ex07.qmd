@@ -1,0 +1,125 @@
+---
+title: "In-class Exercise 7"
+date: "March 08, 2024"
+date-modified: "last-modified"
+execute: 
+  eval: true
+  echo: true
+  message: false
+  warning: false
+  freeze: true
+---
+
+```{r}
+pacman::p_load(sf,terra,gstat,tmap,viridis,tidyverse,tibble,dplyr)
+```
+
+```{r}
+rfstations <- read.csv("data/aspatial/RainfallStation.csv")
+```
+
+```{r}
+rfdata <- read_csv("data/aspatial/DAILYDATA_202402.csv") %>%
+  dplyr::select(c(1,5)) %>%
+  group_by(Station) %>%
+  summarise(MONTHSUM = sum (`Daily Rainfall Total (mm)`)) %>%
+  ungroup()
+```
+
+```{r}
+rfdata <- rfdata %>%
+  left_join(rfstations)
+```
+
+```{r}
+rfdata_sf <- st_as_sf(rfdata,
+                      coords = c("Longitude",
+                                 "Latitude"),
+                      crs = 4326) %>%
+  st_transform(crs=3414)
+```
+
+```{r}
+mpsz2019 <-st_read(dsn = "data/geospatial",layer ="MPSZ-2019") %>%
+  st_transform(CRS =3414)
+```
+
+```{r}
+tmap_options(check.and.fix = TRUE)
+tmap_mode("view")
+tm_shape(mpsz2019)+
+  tm_borders()+
+  tm_shape(rfdata_sf)+
+  tm_dots(col="MONTHSUM")
+tmap_mode("plot")
+```
+
+```{r}
+grid <- terra::rast(mpsz2019,
+                    nrows = 690,
+                    ncols = 1075)
+
+xy <- terra::xyFromCell(grid,
+                        1:ncell(grid))
+```
+
+```{r}
+sf::sf_use_s2(FALSE)
+```
+
+```{r}
+coop <- st_as_sf(as.data.frame(xy),
+                 coords = c("x","y"),
+                 crs = st_crs(mpsz2019))
+```
+
+```{r}
+coop <- st_filter(coop,mpsz2019)
+#qtm(coop)
+```
+
+```{r}
+res <- gstat(formula = MONTHSUM ~ 1,
+             locations = rfdata_sf,
+             nmax = 15,
+             set = list(idp = 0))
+```
+
+```{r}
+# 获取rfdata_sf对象的CRS
+rfdata_sf_crs <- st_crs(rfdata_sf)
+
+# 打印rfdata_sf对象的CRS信息
+print(rfdata_sf_crs)
+
+# 将coop转换为与rfdata_sf相同的CRS
+coop <- st_transform(coop, crs = rfdata_sf_crs)
+
+
+```
+
+```{r}
+resp <- predict(res,coop)
+```
+
+```{r}
+# 如果CRS不一致，需要转换resp的CRS以匹配grid
+resp <- st_transform(resp, crs = terra::crs(grid))
+
+# 再次尝试栅格化
+resp$x <- st_coordinates(resp)[,1]
+resp$y <- st_coordinates(resp)[,2]
+resp$pred <- resp$var1.pred
+
+# 确保field参数与数据中的名称匹配
+pred <- terra::rasterize(resp, grid, field = "pred", fun = 'mean')
+
+# 检查栅格化后的预测值
+#print(terra::values(pred))
+
+# 用不同的颜色和透明度设置可视化
+tmap_options(check.and.fix = TRUE)
+tmap_mode("plot")
+tm_shape(pred) +
+  tm_raster(alpha = 0.6, palette = "viridis", n = 5) # n = 5 用于定义颜色的数量
+```
