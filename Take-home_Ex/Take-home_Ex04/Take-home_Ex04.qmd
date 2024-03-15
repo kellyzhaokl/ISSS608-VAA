@@ -26,7 +26,7 @@ Our project is about weather visualization. So in this take-home exercise 4, I w
 ### 2.1 Loading R packages
 
 ```{r}
-pacman::p_load(ggplot2,readr,dplyr,lubridate,pheatmap,tmap, tidyverse,sf,viridis,terra,gstat,tmap,tibble)
+pacman::p_load(ggplot2,readr,dplyr,lubridate,pheatmap,tmap, tidyverse,sf,viridis,terra,gstat,tmap,tibble,reshape2,forecast,urca,tseries)
 ```
 
 ### 2.2 Data Preparation
@@ -60,43 +60,46 @@ data <- data %>%
   ) %>%
   
   suppressWarnings()
-
-sum(is.na(data$DailyRainfall))
-
-monthly_rainfall <- data %>%
-  group_by(Year, Month) %>%
-  summarise(TotalRainfall = sum(DailyRainfall, na.rm = TRUE))
-
-print(monthly_rainfall)
-
 ```
 
-## 4 Visualisation
+::: callout-note
+Because for the shiny module I'm working on, the map takes up a relatively important part of it. Through the preliminary analysis of rawdata, we found that there are a lot of missing data , which will be a big challenge for the subsequent map visualization if they are deleted. Therefore, in the map display part, we did not delete the data, and mainly focus on the visualization aspect. Then when I analyze the time series predict. I will remove the missing values in order to predict the rainfall in the next two years more accurately.
+:::
 
-### 4.1 Monthly Rainfall Heatmap By Year
+## 3 Visualisation
+
+### 3.1 Monthly Rainfall Heatmap By Year
 
 Firstly, I create this heatmap to illustrate the monthly rainfall distribution over a decade, with varying shades of blue representing the amount of rainfall—darker for more rain and lighter for less.
 
 ```{r}
 
+monthly_rainfall_per_station <- data %>%
+  group_by(Station, Year, Month) %>%
+  summarise(TotalRainfall = sum(DailyRainfall, na.rm = TRUE), .groups = "drop")
+
+monthly_rainfall <- monthly_rainfall_per_station %>%
+  group_by(Year, Month) %>%
+  summarise(AvgRainfall = mean(TotalRainfall, na.rm = TRUE), .groups = "drop")
+
 monthly_rainfall$Year <- factor(monthly_rainfall$Year)
-monthly_rainfall$Month <- factor(monthly_rainfall$Month, 
-                                 levels = c(1:12), 
+monthly_rainfall$Month <- factor(monthly_rainfall$Month,
+                                 levels = c(1:12),
                                  labels = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"))
 
-ggplot(monthly_rainfall, aes(x = Month, y = Year, fill = TotalRainfall)) +
-  geom_tile(color = "white") + 
-  scale_fill_gradient(low = "white", high = "blue") + 
-  theme_minimal() + 
-  labs(fill = "Total Rainfall (mm)", 
-       title = "Monthly Rainfall Heatmap", 
-       x = "Month", 
-       y = "Year") + 
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+ggplot(monthly_rainfall, aes(x = Month, y = Year, fill = AvgRainfall)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "white", high = "blue") +
+  theme_minimal() +
+  labs(fill = "Average Rainfall (mm)",
+       title = "Monthly Rainfall Heatmap",
+       x = "Month",
+       y = "Year") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 ```
 
-### 4.2 Daily Rainfall HeatMap By Month
+### 3.2 Daily Rainfall HeatMap By Month
 
 Analyzing daily rainfall patterns instead could offer a more precise understanding of rainfall trends and extreme weather events, providing valuable insight beyond the broader monthly averages.
 
@@ -112,7 +115,7 @@ ggplot(data_2023, aes(x = factor(Day), y = factor(Month))) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
-### 4.3 Rainfall Distribution In Singapore
+### 3.3 Rainfall Distribution In Singapore
 
 Get the rainfall station dataset
 
@@ -120,28 +123,29 @@ Get the rainfall station dataset
 rfstations1 <- read.csv("data/aspatial/RainfallStation.csv")
 ```
 
-For example, calculate the average rainfall at each station in 2023
+Then, we can choose to select a year and month to see the rainfall distribution in Singapore which could indicate in shiny app.
 
 ```{r}
-rfdata1 <- data_2023 %>%
-  group_by(Station) %>%
-  summarise(AvgRainfall = mean(DailyRainfall, na.rm = TRUE)) %>%
-  ungroup() 
+# Filter the data for the selected month and year
+selected_month <- c("1")
+selected_year <- c("2023")
 
-print(rfdata1)
+# Summarize the total rainfall for each station for the selected month and year
+rfdata1 <- data %>%
+  dplyr::filter(Year %in% selected_year, Month %in% selected_month) %>%
+  group_by(Station, Year, Month) %>%
+  dplyr::summarise(MONTHSUM = sum(DailyRainfall, na.rm = TRUE), .groups = "drop") %>%
+  ungroup()
+
 ```
 
-Combining rainfall data with station coordinates data
-
 ```{r}
+# Combining rainfall data with station coordinates data
 rfdata1 <- rfdata1 %>%
   left_join(rfstations1)
 
-rfdata_sf1 <- st_as_sf(rfdata1,
-                      coords = c("Longitude",
-                                 "Latitude"),
-                      crs = 4326) %>%
-  st_transform(crs=3414)
+rfdata_sf1 <- st_as_sf(rfdata1, coords = c("Longitude", "Latitude"), crs = 4326) %>%
+  st_transform(crs = 3414)
 ```
 
 ```{r}
@@ -157,7 +161,7 @@ tmap_mode("view")
 tm_shape(mpsz2019)+
   tm_borders()+
   tm_shape(rfdata_sf1)+
-  tm_dots(col="AvgRainfall")
+  tm_dots(col="MONTHSUM")
 tmap_mode("plot")
 ```
 
@@ -175,10 +179,7 @@ coop <- st_as_sf(as.data.frame(xy),
 
 coop <- st_filter(coop,mpsz2019)
 
-```
-
-```{r}
-res <- gstat(formula = AvgRainfall ~ 1,
+res <- gstat(formula = MONTHSUM ~ 1,
              locations = rfdata_sf1,
              nmax = 15,
              set = list(idp = 0))
@@ -188,15 +189,8 @@ rfdata_sf_crs1 <- st_crs(rfdata_sf1)
 print(rfdata_sf_crs1)
 
 coop <- st_transform(coop, crs = rfdata_sf_crs1)
-```
 
-```{r}
 resp <- predict(res,coop)
-```
-
-Rainfall Distribution In Singapore
-
-```{r}
 
 resp <- st_transform(resp, crs = terra::crs(grid))
 
@@ -205,19 +199,180 @@ resp$y <- st_coordinates(resp)[,2]
 resp$pred <- resp$var1.pred
 
 pred <- terra::rasterize(resp, grid, field = "pred", fun = 'mean')
-
 #print(terra::values(pred))
 
-tmap_options(check.and.fix = TRUE)
-tmap_mode("plot")
-tm_shape(pred) +
-  tm_raster(alpha = 0.6, palette = "viridis", n = 6) 
 ```
 
-## 5 Shiny Storyboard
+Plot the monthly rainfall Distribution In Singapore
+
+```{r}
+tmap_options(check.and.fix = TRUE)
+tmap_mode("plot")
+tm_shape(pred) + 
+  tm_raster(alpha = 0.6, 
+            palette = "viridis",
+            title = "Total monthly rainfall (mm)") +
+  tm_layout(main.title = "Distribution of monthly rainfall",
+            main.title.position = "center",
+            main.title.size = 1.2,
+            legend.height = 0.45, 
+            legend.width = 0.35,
+            frame = TRUE) +
+  tm_compass(type="8star", size = 2) +
+  tm_scale_bar() +
+  tm_grid(alpha =0.2)
+```
+
+### 3.4 Rainfall Prediction
+
+First we removed the missing values and then calculated the rainfall for Singapore for each month of the year.
+
+```{r}
+data_filtered <- data %>%
+  filter(!is.na(DailyRainfall))
+
+rainfall_sum <- data_filtered %>%
+  group_by(Year, Month, Station) %>%
+  summarise(Rainfall = sum(DailyRainfall), .groups = "drop")
+
+rainfall_avg <- rainfall_sum %>%
+  group_by(Year, Month) %>%
+  summarise(AvgRainfall = mean(Rainfall), .groups = "drop")
+
+rain_ts <- rainfall_avg %>%
+  ungroup() %>%
+  transmute(AvgRainfall) %>%
+  ts(start = c(2014, 1), freq = 12)
+
+rain_ts1 <- window(rain_ts, start = c(2014, 1), end = c(2023, 12))
+
+#Plot Time Series Data
+start_year <- start(rain_ts1)[1]
+start_month <- start(rain_ts1)[2]
+
+dates <- seq(as.Date(paste(start_year, start_month, "01", sep = "-")), by = "month", length.out = length(rain_ts1))
+
+rain_ts1_df <- data.frame(Date = dates, AvgRainfall = as.vector(rain_ts1))
+
+ggplot(rain_ts1_df, aes(x = Date, y = AvgRainfall)) +
+  geom_line() +
+  ylab("Rainfall (mm)") +
+  xlab("Datetime") +
+  scale_x_date(date_labels = '%b - %Y', breaks = '2 year', minor_breaks = '2 month') +
+  theme_bw() +
+  ggtitle("Singapore Rainfall 2014 - 2023")
+```
+
+Then, we will decompose our time series data into more detail based on Trend, Seasonality, and Remainder component. From the
+
+```{r}
+# Decompose the time series data
+decomposed <- decompose(rain_ts1)
+
+# Plot the decomposed components
+autoplot(decomposed) +
+  xlab("Datetime") +
+  ggtitle("Decomposition of Singapore Rainfall 2014 - 2023") +
+  theme_bw()
+```
+
+::: panel-tabset
+## Trend
+
+The long-term trend in rainfall is relatively stable, with no significant upward or downward trend. This indicates that there is no significant long-term change in the overall rainfall in Singapore during the 10-year period.
+
+## Seasonal
+
+There is a clear seasonal variation in rainfall, with a similar cyclical pattern from year to year. This is consistent with the previously observed seasonal characteristics and suggests that rainfall in Singapore is strongly influenced by seasonal factors.
+
+## Remainder
+
+After removing the trend and seasonal components, the remainder shows random fluctuations and outliers in rainfall. This part of the variation may be related to climatic events or other factors in a particular year.
+:::
+
+From the seasonal plot, it indeed shows a seasonal pattern that occurred each year
+
+```{r}
+seasonplot(rain_ts1, Year.labels = TRUE, col = 1:13, 
+   main = "Seasonal Plot", ylab= "Rainfall")
+```
+
+So after seeing the result, we could see that since rainfall is quite seasonal, we can utilize seasonal patterns in the historical data to predict rainfall in the future. In this practice, I choose to use seasonal ARIMA model .
+
+```{r}
+hujan_train <- window(rain_ts1, end = c(2020,12))
+hujan_test <- window(rain_ts1, start = c(2021,1))
+
+#KPSS test
+kpss_test <- ur.kpss(rain_ts1)
+summary(kpss_test)
+
+# SDF test
+adf_test <- ur.df(rain_ts1, type = "drift", selectlags = "BIC")
+summary(adf_test)
+```
+
+Combining the results of the KPSS test and the ADF test, we can conclude that the time series of rainfall in Singapore is smooth. the KPSS test rejects the original hypothesis of smoothness, while the ADF test rejects the original hypothesis of non-smoothness, and the results of the two tests are consistent and support the idea that the time series is smooth.
+
+As a next step, we can use the ACF (Autocorrelation Function) and PACF (Partial Autocorrelation Function) plots to identify the order of the ARIMA model, and then fit the data and make predictions.
+
+```{r}
+
+acf(rain_ts1, main = "ACF of Singapore Rainfall")
+
+pacf(rain_ts1, main = "PACF of Singapore Rainfall")
+```
+
+Since the data was already identified as stationary, no differencing is needed (d=0).
+
+Considering these factors, a few potential SARIMA(p,d,q)(P,D,Q)\[12\] models to try would be:
+
+-   SARIMA(1,0,1)(1,0,1)\[12\]
+
+-   SARIMA(1,0,2)(1,0,1)\[12\]
+
+-   SARIMA(2,0,1)(1,0,1)\[12\]
+
+-   SARIMA(2,0,2)(1,0,1)\[12\]
+
+```{r}
+
+fit1 <- Arima(hujan_train, order=c(1,0,1), seasonal = c(1,0,1)) 
+fit2 <- Arima(hujan_train, order= c(1,0,2), seasonal = c (1,0,1)) 
+fit3 <- Arima(hujan_train, order=c(2,0,1), seasonal = c(1,0,1)) 
+fit4 <- Arima(hujan_train, order=c(2, 0,2), seasonal =  c(1,0,1)) 
+
+data.frame('Model-1' = fit1$aicc, 'Model-2' = fit2$aicc, 
+     'Model-3' = fit3$aicc,
+     'Model-4' = fit4$aicc, 
+      row.names =   "AICc Value")
+```
+
+AICc value of Model-1 is the lowest among other models, that’s why we will choose this model as our ARIMA model for forecasting. But, we also need to have residuals checked for this model to make sure this model will be appropriate for our time series forecasting.
+
+```{r}
+checkresiduals(fit1)
+```
+
+Overall, the ARIMA(1,0,1)(1,0,1)\[12\] model seems to provide a reasonably good fit to the data based on these diagnostic plots. The residuals appear to be mostly uncorrelated and normally distributed, which are desirable properties.
+
+Then, we will plot 2024–2026 Rainfall Forecasting
+
+```{r}
+
+forecast_result <- forecast(fit1, h = 36) 
+
+plot(forecast_result)
+```
+
+## 4 Shiny Storyboard
 
 The storyboard prototype is shown like this:
 
-When selecting year, we could see the rainfall distribution across Singapore and the daily rainfall distribution every year.
+When selecting year, and month, we could see the rainfall station visualizaiton and the whole distribution across Singapore.
 
-![](images/clipboard-2171587909.png)
+![](images/5fb691041e023c75194611a6d8fd3c5.png)
+
+When selecting year we could predict the rainfall trend in 2024-2026.
+
+![](images/d18fad69800674831de0e396c2724a5.png)
